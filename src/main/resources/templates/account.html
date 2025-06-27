@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Double Slider Login / Registration Form</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../static/css/account.css"></head>
+    <link rel="stylesheet" th:href="@{/css/account.css}">
+<body>
+<!-- Hiển thị thông báo -->
+<div th:if="${success}" class="alert alert-success" style="position: fixed; top: 20px; right: 20px;">
+    <span th:text="${success}"></span>
+</div>
+
+<div th:if="${error}" class="alert alert-danger" style="position: fixed; top: 20px; right: 20px;">
+    <span th:text="${error}"></span>
+</div>
+
+<div th:if="${loginSuccess}" class="alert alert-success" style="position: fixed; top: 20px; right: 20px;">
+    <span th:text="${loginSuccess}"></span>
+</div>
+
+<div th:if="${loginError}" class="alert alert-danger" style="position: fixed; top: 20px; right: 20px;">
+    <span th:text="${loginError}"></span>
+</div>
+<div class="container" id="container">
+
+    <!-- Form Đăng ký -->
+    <div class="form-container register-container">
+        <form method="post" action="/register" th:object="${registerRequest}">
+            <h1>Register hire</h1>
+            <input type="text" name ="name" placeholder="Name">
+            <input type="email" name ="email" placeholder="Email" >
+            <input type="password" name ="password" placeholder="Password">
+            <button>Register</button>
+            <span>or use your account</span>
+            <div class="social-container">
+                <a href="#" class="social"><i class="lni lni-facebook-fill"></i></a>
+                <a href="#" class="social"><i class="lni lni-google"></i></a>
+                <a href="#" class="social"><i class="lni lni-linkedin-original"></i></a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Form Đăng nhập -->
+    <div class="form-container login-container">
+        <form method="post" action="/login" th:object="${loginRequest}">
+            <h1>Login hire</h1>
+            <input type="email" name = "email" placeholder="Email">
+            <input type="password" name = "password" placeholder="Password">
+            <div class="content">
+                <div class="checkbox">
+                    <input type="checkbox" name="remember" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <div class="pass-link">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </div>
+            <button>login</button>
+            <span>or use your account</span>
+            <div class="social-container">
+                <a href="#" class="social"><i class="lni lni-facebook-fill"></i></a>
+                <a href="#" class="social"><i class="lni lni-google"></i></a>
+                <a href="#" class="social"><i class="lni lni-linkedin-original"></i></a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Vùng hiệu ứng overlay -->
+    <div class="overlay-container">
+        <div class="overlay">
+
+            <!-- Panel bên trái: xuất hiện khi đang ở trang đăng ký -->
+            <div class="overlay-panel overlay-left">
+                <h1 class="title">Hello <br> friends</h1>
+                <p>if Yout have an account, login here and have fun</p>
+                <button class="ghost" id="login">Login
+                    <i class="lni lni-arrow-left login"></i>
+                </button>
+            </div>
+
+            <!-- Panel bên phải: xuất hiện khi đang ở trang đăng nhập -->
+            <div class="overlay-panel overlay-right">
+                <h1 class="title">Start yout <br> journy now</h1>
+                <p>if you don't have an account yet, join us and start your journey.</p>
+                <button class="ghost" id="register">Register
+                    <i class="lni lni-arrow-right register"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thêm CSS cho thông báo -->
+    <style>
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            z-index: 1000;
+            animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+        }
+        .alert-success {
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+            color: #3c763d;
+        }
+        .alert-danger {
+            background-color: #f2dede;
+            border-color: #ebccd1;
+            color: #a94442;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+
+</div>
+
+<script src="../static/js/account.js"></script>
+<script th:src="@{/js/account.js}"></script>
+
+</body>
+</html>
