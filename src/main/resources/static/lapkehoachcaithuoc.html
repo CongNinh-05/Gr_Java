@@ -1,0 +1,239 @@
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lập Kế Hoạch Cai Thuốc</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+<header class="p-4 bg-white shadow w-full fixed top-0 left-0 z-10">
+    <button aria-label="Quay lại trang chủ" class="text-gray-700 hover:text-gray-900 transition" onclick="window.location.href='home'">
+        <i class="fas fa-arrow-left mr-2"></i>
+        Trang chủ
+    </button>
+</header>
+<main class="bg-white rounded-lg shadow-lg max-w-3xl w-full p-8">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6 text-center">
+        Lập Kế Hoạch Cai Thuốc
+    </h1>
+    <form id="quitPlanForm" class="space-y-6">
+        <div>
+            <label
+                    for="reason"
+                    class="block text-gray-700 font-medium mb-2"
+            >Lý do muốn cai thuốc <span class="text-red-500">*</span></label
+            >
+            <textarea
+                    id="reason"
+                    name="reason"
+                    rows="3"
+                    required
+                    placeholder="Nhập lý do bạn muốn cai thuốc..."
+                    class="w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            ></textarea>
+        </div>
+
+        <div>
+            <label
+                    for="stages"
+                    class="block text-gray-700 font-medium mb-2"
+            >Các giai đoạn cai thuốc <span class="text-red-500">*</span></label
+            >
+            <div id="stagesContainer" class="space-y-4">
+                <div class="flex space-x-3 items-center">
+                    <input
+                            type="text"
+                            name="stages[]"
+                            required
+                            placeholder="Nhập giai đoạn cai thuốc"
+                            class="flex-grow rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                            type="button"
+                            aria-label="Xóa giai đoạn"
+                            class="removeStageBtn text-red-600 hover:text-red-800 focus:outline-none"
+                            disabled
+                    >
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <button
+                    type="button"
+                    id="addStageBtn"
+                    class="mt-3 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+                <i class="fas fa-plus mr-2"></i> Thêm giai đoạn
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+                <label
+                        for="startDate"
+                        class="block text-gray-700 font-medium mb-2"
+                >Thời điểm bắt đầu thực hiện <span class="text-red-500">*</span></label
+                >
+                <input
+                        type="date"
+                        id="startDate"
+                        name="startDate"
+                        required
+                        class="w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+            <div>
+                <label
+                        for="expectedEndDate"
+                        class="block text-gray-700 font-medium mb-2"
+                >Thời điểm dự kiến cai được thuốc <span class="text-red-500">*</span></label
+                >
+                <input
+                        type="date"
+                        id="expectedEndDate"
+                        name="expectedEndDate"
+                        required
+                        class="w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+        </div>
+
+        <div>
+            <label
+                    for="notes"
+                    class="block text-gray-700 font-medium mb-2"
+            >Ghi chú thêm (nếu có)</label
+            >
+            <textarea
+                    id="notes"
+                    name="notes"
+                    rows="3"
+                    placeholder="Nhập ghi chú thêm..."
+                    class="w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            ></textarea>
+        </div>
+
+        <div class="flex justify-center">
+            <button
+                    type="submit"
+                    class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+                <i class="fas fa-check-circle mr-2"></i> Lưu kế hoạch
+            </button>
+        </div>
+    </form>
+</main>
+
+<script>
+    // Add/remove stages dynamically
+    const stagesContainer = document.getElementById('stagesContainer');
+    const addStageBtn = document.getElementById('addStageBtn');
+
+    function updateRemoveButtons() {
+        const removeBtns = stagesContainer.querySelectorAll('.removeStageBtn');
+        removeBtns.forEach((btn, idx) => {
+            btn.disabled = stagesContainer.children.length === 1;
+        });
+    }
+
+    addStageBtn.addEventListener('click', () => {
+        const stageDiv = document.createElement('div');
+        stageDiv.className = 'flex space-x-3 items-center';
+        stageDiv.innerHTML = `
+        <input
+          type="text"
+          name="stages[]"
+          required
+          placeholder="Nhập giai đoạn cai thuốc"
+          class="flex-grow rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button
+          type="button"
+          aria-label="Xóa giai đoạn"
+          class="removeStageBtn text-red-600 hover:text-red-800 focus:outline-none"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      `;
+        stagesContainer.appendChild(stageDiv);
+        updateRemoveButtons();
+
+        const removeBtn = stageDiv.querySelector('.removeStageBtn');
+        removeBtn.addEventListener('click', () => {
+            stageDiv.remove();
+            updateRemoveButtons();
+        });
+    });
+
+    // Initialize remove button for the first stage
+    updateRemoveButtons();
+    const firstRemoveBtn = stagesContainer.querySelector('.removeStageBtn');
+    if (firstRemoveBtn) {
+        firstRemoveBtn.addEventListener('click', (e) => {
+            if (stagesContainer.children.length > 1) {
+                e.target.closest('div.flex').remove();
+                updateRemoveButtons();
+            }
+        });
+    }
+
+    // Form submission handler
+    const form = document.getElementById('quitPlanForm');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Collect form data
+        const formData = new FormData(form);
+        const reason = formData.get('reason').trim();
+        const stages = formData.getAll('stages[]').map(s => s.trim()).filter(s => s.length > 0);
+        const startDate = formData.get('startDate');
+        const expectedEndDate = formData.get('expectedEndDate');
+        const notes = formData.get('notes').trim();
+
+        if (!reason) {
+            alert('Vui lòng nhập lý do muốn cai thuốc.');
+            return;
+        }
+        if (stages.length === 0) {
+            alert('Vui lòng nhập ít nhất một giai đoạn cai thuốc.');
+            return;
+        }
+        if (!startDate) {
+            alert('Vui lòng chọn thời điểm bắt đầu thực hiện.');
+            return;
+        }
+        if (!expectedEndDate) {
+            alert('Vui lòng chọn thời điểm dự kiến cai được thuốc.');
+            return;
+        }
+        if (startDate > expectedEndDate) {
+            alert('Thời điểm bắt đầu phải trước thời điểm dự kiến cai được thuốc.');
+            return;
+        }
+
+        // Here you can handle the data, e.g., send to server or generate plan
+        // For demo, just show a summary alert
+        let summary = `Kế hoạch cai thuốc của bạn:\n\nLý do: ${reason}\n\nCác giai đoạn:\n`;
+        stages.forEach((stage, i) => {
+            summary += `${i + 1}. ${stage}\n`;
+        });
+        summary += `\nThời điểm bắt đầu: ${startDate}\nThời điểm dự kiến cai được: ${expectedEndDate}\n\nGhi chú: ${notes || 'Không có'}`;
+
+        alert(summary);
+    });
+</script>
+</body>
+</html>

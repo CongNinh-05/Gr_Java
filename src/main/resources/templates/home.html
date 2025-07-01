@@ -1,0 +1,588 @@
+<html class="scroll-smooth" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>
+        Smoke Free Journey
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js">
+    </script>
+    <style>
+        /* Custom font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f9f4;
+            overflow-x: hidden;
+        }
+
+        /* Parallax background container */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -10;
+            pointer-events: none;
+        }
+
+        .parallax-bg img {
+            width: 110vw;
+            height: 110vh;
+            object-fit: cover;
+            filter: brightness(0.3) saturate(0.6);
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* Leaf and smoke animations */
+        .leaf-fall {
+            animation: leafFall 6s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes leafFall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(80px) rotate(45deg);
+            }
+        }
+
+        /* Heart bloom animation */
+        .heart-bloom {
+            animation: heartBloom 1s ease forwards;
+        }
+
+        @keyframes heartBloom {
+            0% {
+                transform: scale(1);
+                color: #f97316;
+            }
+            50% {
+                transform: scale(1.5);
+                color: #fb923c;
+            }
+            100% {
+                transform: scale(1);
+                color: #f97316;
+            }
+        }
+
+        /* Circular progress bar wood grain effect */
+        .progress-circle {
+            background: radial-gradient(circle at center, #a3d9a5 0%, #3cb371 70%);
+            box-shadow: inset 0 0 10px #2e7d32;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        /* Rung animation for leaves and tree parts */
+        .leaf-rung {
+            animation: leafRung 3s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+
+        @keyframes leafRung {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+
+        /* Root spreading animation */
+        .root-spread {
+            animation: rootSpread 2s ease forwards;
+            transform-origin: center top;
+            opacity: 0;
+        }
+
+        @keyframes rootSpread {
+            0% {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+    </style>
+</head>
+<body class="relative">
+<!-- Parallax Background -->
+<div aria-hidden="true" class="parallax-bg">
+    <img alt="Mờ ảo cảnh rừng xanh với nhiều cây cổ thụ và lá cây, tạo hiệu ứng parallax nền" height="1080" id="parallax-bg-img" src="https://storage.googleapis.com/a1aa/image/7d5291d1-d80c-4248-72a3-e3226af96bfc.jpg" width="1920"/>
+</div>
+<!-- Hero Section (Gốc cây - Khởi đầu) -->
+<section class="min-h-screen flex flex-col justify-center items-center bg-white relative z-10 px-6 text-center" id="hero">
+    <div class="relative w-64 h-64 md:w-80 md:h-80">
+        <img alt="Gốc cây cổ thụ lớn với rễ lan rộng, phủ rêu xanh và đất màu nâu, biểu tượng khởi đầu hành trình" class="w-full h-full object-contain origin-center" height="320" id="tree-root-img" src="https://storage.googleapis.com/a1aa/image/0084c7ac-71f4-4bd0-cce6-c40e57534164.jpg" width="320"/>
+    </div>
+    <h1 class="mt-8 text-4xl md:text-5xl font-extrabold text-[#3CB371] drop-shadow-md">
+        Bắt đầu hành trình Smoke Free!
+    </h1>
+    <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="dangki.html" class="no-underline">
+            <button class="bg-orange-300 hover:bg-orange-400 text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition" id="btn-register">
+                Đăng ký thành viên
+            </button>
+        </a>
+    </div>
+</section>
+<!-- Branch Sections Container -->
+<main class="relative z-10 max-w-7xl mx-auto px-6 space-y-24 pb-40">
+    <!-- 1. Ghi nhận tình trạng hút thuốc -->
+    <section class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16" id="smoke-status">
+        <div class="flex-shrink-0 w-full md:w-1/2 relative">
+            <img alt="Biểu đồ khói thuốc đang tan biến dần thành những chiếc lá xanh tươi, biểu tượng sự chuyển đổi tích cực" class="w-full h-auto object-contain" height="300" id="smoke-chart-img" src="https://storage.googleapis.com/a1aa/image/8bf3ee42-6c62-4ebf-ebf5-8daaeff89c43.jpg" width="400"/>
+            <div aria-hidden="true" class="absolute top-4 left-4 text-[#3CB371] text-4xl md:text-5xl">
+                <i class="fas fa-lungs">
+                </i>
+            </div>
+        </div>
+        <form aria-label="Form ghi nhận tình trạng hút thuốc" class="w-full md:w-1/2 bg-white rounded-xl shadow-lg p-8" id="smoke-status-form">
+            <h2 class="text-2xl font-bold text-[#3CB371] mb-6">
+                Ghi nhận tình trạng hút thuốc
+            </h2>
+            <label class="block text-gray-700 font-semibold mb-2" for="cigarettes-per-day">
+                Số điếu thuốc mỗi ngày
+            </label>
+            <input class="w-full border border-gray-300 rounded-md px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-[#3CB371]" id="cigarettes-per-day" max="100" min="0" name="cigarettes-per-day" placeholder="VD: 10" required="" type="number"/>
+            <label class="block text-gray-700 font-semibold mb-2" for="smoking-duration">
+                Tần suất hút thuốc(điếu/giờ)
+            </label>
+            <input class="w-full border border-gray-300 rounded-md px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-[#3CB371]" id="smoking-duration" max="100" min="0" name="smoking-duration" placeholder="VD: 5" required="" type="number"/>
+            <label class="block text-gray-700 font-semibold mb-2" for="smoking-duration">
+                Gía tiền bao thuốc(VND)
+            </label>
+            <input class="w-full border border-gray-300 rounded-md px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-[#3CB371]" id="smoking-money" max="100" min="0" name="smoking-duration" placeholder="VD: 10000" required="" type="number"/>
+            <button class="bg-[#3CB371] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[#2e8b57] transition w-full" type="submit">
+                Ghi nhận
+            </button>
+        </form>
+    </section>
+    <!-- 2. Lập kế hoạch cai thuốc -->
+    <section class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16" id="quit-plan">
+        <div class="flex-shrink-0 w-full md:w-1/2 relative">
+            <img alt="Lịch với các mốc màu xanh lá cây biểu thị các mục tiêu cai thuốc" class="w-full h-auto object-contain" height="300" id="calendar-img" src="https://storage.googleapis.com/a1aa/image/61a0f867-5b53-4ac8-ae5a-68bab134dc98.jpg" width="400"/>
+            <div aria-hidden="true" class="absolute top-4 left-4 text-[#3CB371] text-4xl md:text-5xl">
+                <i class="fas fa-calendar-alt">
+                </i>
+            </div>
+        </div>
+        <div class="mb-8 p-6 border-2 border-[#3CB371] rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+            <h2 class="text-2xl font-bold text-[#3CB371] mb-1">
+                Lập kế hoạch cai thuốc
+            </h2>
+            <a href="lapkehoachcaithuoc.html" class="inline-block">
+        <span class="text-sm font-medium text-gray-600 hover:text-[#3CB371] hover:underline transition-all duration-300 ease-in-out transform hover:translate-x-1 cursor-pointer">
+            Lập kế hoạch ngay thôi →
+        </span>
+            </a>
+        </div>
+    </section>
+    <!-- 3. Bảng thống kê -->
+    <section aria-label="Bảng thống kê dạng cây" class="flex flex-col items-center bg-white rounded-xl shadow-lg p-10 space-y-10" id="dashboard">
+        <h2 class="text-3xl font-bold text-[#3CB371]">
+            Bảng thống kê
+        </h2>
+        <div class="w-full max-w-4xl flex flex-col items-center space-y-8">
+            <!-- Rễ cây -->
+            <div class="flex items-center space-x-6 w-full max-w-2xl">
+                <img alt="Rễ cây lan tỏa trong đất màu nâu, biểu tượng số tiền tiết kiệm được" class="w-20 h-20 object-contain" height="80" id="roots-img" src="https://storage.googleapis.com/a1aa/image/57c1cc6d-1209-4075-9deb-3ae51f1c821e.jpg" width="80"/>
+                <div>
+                    <p class="text-xl font-semibold text-[#3CB371]">
+                        Số tiền tiết kiệm được
+                    </p>
+                    <p class="text-2xl font-bold text-gray-800" id="money-saved">
+                        1.250.000₫
+                    </p>
+                </div>
+            </div>
+            <!-- Thân cây -->
+            <div class="flex items-center space-x-6 w-full max-w-2xl">
+                <img alt="Thân cây với các vòng tăng trưởng màu xanh lá, biểu tượng số ngày bỏ thuốc" class="w-20 h-30 object-contain" height="120" id="trunk-img" src="https://storage.googleapis.com/a1aa/image/84783ffe-82c0-4912-0c8d-305fe7b4d26a.jpg" width="80"/>
+                <div>
+                    <p class="text-xl font-semibold text-[#3CB371]">
+                        Số ngày bỏ thuốc
+                    </p>
+                    <p class="text-2xl font-bold text-gray-800" id="days-quit">
+                        45 ngày
+                    </p>
+                </div>
+            </div>
+            <!-- Lá -->
+            <div class="flex items-center space-x-6 w-full max-w-2xl">
+                <img alt="Nhóm lá xanh tươi biểu tượng sức khỏe cải thiện" class="w-20 h-20 object-contain leaf-rung" height="80" id="leaves-img" src="https://storage.googleapis.com/a1aa/image/73368b26-8b7a-4b61-ed45-f108f2bff243.jpg" width="80"/>
+                <div>
+                    <p class="text-xl font-semibold text-[#3CB371]">
+                        Sức khỏe cải thiện
+                    </p>
+                    <p class="text-2xl font-bold text-gray-800" id="health-improve">
+                        Đang cập nhật...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 4. Thông báo -->
+    <section aria-label="Thông báo nhắc nhở" class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16" id="notifications">
+        <div class="flex-shrink-0 w-full md:w-1/2 relative">
+            <img alt="Chim nhỏ màu xanh đậu trên cành cây, biểu tượng thông báo" class="w-full h-auto object-contain" height="300" id="bird-notification-img" src="https://storage.googleapis.com/a1aa/image/6e870fcf-fb01-4c4e-f4f3-04e7e8610d3c.jpg" width="400"/>
+            <div aria-hidden="true" class="absolute top-4 left-4 text-[#3CB371] text-4xl md:text-5xl">
+                <i class="fas fa-bell">
+                </i>
+            </div>
+        </div>
+        <div aria-live="assertive" class="w-full md:w-1/2 bg-white rounded-xl shadow-lg p-8" id="notification-popup" role="alert">
+            <h2 class="text-2xl font-bold text-[#3CB371] mb-4">
+                Thông báo
+            </h2>
+            <p class="text-gray-700 text-lg">
+                Bạn đã không hút thuốc 3 ngày!
+            </p>
+        </div>
+    </section>
+    <!-- 5. Theo dõi tiến độ cá nhân -->
+    <section aria-label="Theo dõi tiến độ cá nhân" class="flex flex-col items-center bg-white rounded-xl shadow-lg p-10 space-y-6" id="progress-tracking">
+        <h2 class="text-3xl font-bold text-[#3CB371]">
+            Theo dõi tiến độ cá nhân
+        </h2>
+        <div aria-label="Tiến độ hoàn thành 50 phần trăm" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-circle w-48 h-48 flex items-center justify-center relative" id="progress-circle" role="progressbar">
+            <svg aria-hidden="true" class="absolute inset-0 w-full h-full" viewbox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" fill="none" opacity="0.2" r="54" stroke="#2e7d32" stroke-width="12">
+                </circle>
+                <circle cx="60" cy="60" fill="none" id="progress-bar" r="54" stroke="#3CB371" stroke-dasharray="339.292" stroke-dashoffset="169.646" stroke-linecap="round" stroke-width="12">
+                </circle>
+            </svg>
+            <span class="text-4xl font-extrabold text-white drop-shadow-lg" id="progress-percent">
+      50%
+     </span>
+        </div>
+    </section>
+    <!-- 6. Chia sẻ thành tích -->
+    <section aria-label="Chia sẻ thành tích" class="flex flex-col items-center bg-white rounded-xl shadow-lg p-10 space-y-6" id="share-achievement">
+        <h2 class="text-3xl font-bold text-[#3CB371]">
+            Chia sẻ thành tích
+        </h2>
+        <button aria-label="Chia sẻ thành tích hình trái tim" class="text-orange-400 hover:text-orange-500 text-6xl focus:outline-none focus:ring-4 focus:ring-orange-300 rounded-full transition" id="btn-share">
+            <i class="fas fa-heart">
+            </i>
+        </button>
+        <div aria-hidden="true" class="w-48 h-48 relative" id="flower-branch-container">
+            <img alt="Cành cây màu xanh lá chưa nở hoa" class="w-full h-full object-contain" height="192" id="branch-img" src="https://storage.googleapis.com/a1aa/image/0797f48a-b30a-497e-4161-5100edb308b4.jpg" width="192"/>
+            <img alt="Cành cây nở hoa màu cam nhạt tượng trưng cho thành tích" class="w-full h-full object-contain absolute top-0 left-0 opacity-0 pointer-events-none" height="192" id="flowers-img" src="https://storage.googleapis.com/a1aa/image/73929a2f-ae17-4187-69a6-7d7ea2342c34.jpg" width="192"/>
+        </div>
+    </section>
+    <!-- 7. Tư vấn -->
+    <section aria-label="Tư vấn bác sĩ ảo" class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16" id="consultation">
+        <div class="flex-shrink-0 w-full md:w-1/2 relative">
+            <img alt="Bác sĩ ảo (chatbot) ngồi dưới tán cây xanh, biểu tượng hỗ trợ tư vấn" class="w-full h-auto object-contain" height="300" id="doctor-chatbot-img" src="https://storage.googleapis.com/a1aa/image/7f1c48d5-ddee-4b4b-926c-159c08930e49.jpg" width="400"/>
+        </div>
+        <div aria-label="Khu vực chat tư vấn" class="w-full md:w-1/2 bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-[#3CB371] mb-4">
+                Tư vấn
+            </h2>
+            <p class="text-gray-700 mb-4">
+                Hãy đặt câu hỏi hoặc nhận lời khuyên từ bác sĩ ảo để hỗ trợ hành trình cai thuốc của bạn.
+            </p>
+            <textarea class="w-full border border-gray-300 rounded-md px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#3CB371]" id="chat-input" placeholder="Nhập câu hỏi của bạn..." rows="4"></textarea>
+            <button class="bg-[#3CB371] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[#2e8b57] transition w-full" id="btn-send-chat">
+                Gửi
+            </button>
+        </div>
+    </section>
+</main>
+<!-- Footer (Đất - Nền tảng) -->
+<footer aria-label="Footer với rễ cây và thông tin nền tảng" class="relative bg-white pt-20 pb-12 px-6 flex flex-col items-center text-center max-w-7xl mx-auto" id="footer">
+    <div class="w-full max-w-4xl flex flex-col items-center space-y-8">
+        <img alt="Rễ cây lan tỏa rộng trên nền đất màu nâu với lá cây xanh tươi, biểu tượng nền tảng vững chắc" class="w-full h-auto object-contain root-spread" height="150" id="footer-roots-img" src="https://storage.googleapis.com/a1aa/image/5a510710-f67f-45d1-9c89-a24928c6b177.jpg" width="600"/>
+        <p class="text-xl font-semibold text-[#3CB371]">
+     <span id="active-users">
+      1,234
+     </span>
+            người dùng đang hoạt động
+        </p>
+        <blockquote class="italic text-gray-600 max-w-xl">
+            “Mỗi hơi thở là một lá phổi khỏe mạnh”
+        </blockquote>
+    </div>
+</footer>
+<script>
+    // GSAP Animations and ScrollTrigger Setup
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero tree root gentle shake on page load
+    gsap.fromTo(
+        "#tree-root-img",
+        { rotation: 0 },
+        {
+            rotation: 3,
+            duration: 1,
+            yoyo: true,
+            repeat: 3,
+            ease: "sine.inOut",
+            transformOrigin: "center bottom",
+        }
+    );
+
+    // Parallax background scroll effect
+    window.addEventListener("scroll", () => {
+        const scrollY = window.scrollY;
+        const bg = document.getElementById("parallax-bg-img");
+        // Move background slower than scroll for parallax
+        bg.style.transform = `translateY(${scrollY * 0.3}px)`;
+    });
+
+    // Smoke status section animation: smoke to leaf
+    gsap.fromTo(
+        "#smoke-chart-img",
+        { opacity: 0, x: -100 },
+        {
+            opacity: 1,
+            x: 0,
+            duration: 1.5,
+            scrollTrigger: {
+                trigger: "#smoke-status",
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
+        }
+    );
+
+    // Animate smoke leaf fall effect on form submit
+    const smokeForm = document.getElementById("smoke-status-form");
+    smokeForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const leaf = document.createElement("img");
+        leaf.src =
+            "https://placehold.co/40x40?text=Green+Leaf&color=3cb371&bg=ffffff";
+        leaf.alt = "Chiếc lá xanh rơi xuống biểu tượng sự chuyển đổi từ khói thuốc";
+        leaf.className =
+            "leaf-fall fixed top-1/3 left-1/2 w-10 h-10 pointer-events-none z-50";
+        document.body.appendChild(leaf);
+        gsap.to(leaf, {
+            y: 80,
+            rotation: 45,
+            opacity: 0,
+            duration: 3,
+            ease: "power1.inOut",
+            onComplete: () => leaf.remove(),
+        });
+        alert("Ghi nhận tình trạng hút thuốc thành công!");
+        smokeForm.reset();
+    });
+
+    // Quit plan slider text update
+    const slider = document.getElementById("reduce-slider");
+    const targetText = document.getElementById("reduce-target-text");
+    slider.addEventListener("input", () => {
+        const val = slider.value;
+        targetText.textContent = `Giảm ${val}% sau 2 tuần`;
+        slider.setAttribute("aria-valuenow", val);
+    });
+
+    // Quit plan calendar animation on scroll
+    gsap.fromTo(
+        "#calendar-img",
+        { opacity: 0, x: -100 },
+        {
+            opacity: 1,
+            x: 0,
+            duration: 1.5,
+            scrollTrigger: {
+                trigger: "#quit-plan",
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
+        }
+    );
+
+    // Dashboard parts fade in and leaf rung animation
+    gsap.utils.toArray(["#roots-img", "#trunk-img", "#leaves-img"]).forEach((id) => {
+        gsap.fromTo(
+            id,
+            { opacity: 0, y: 50 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: "#dashboard",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse",
+                },
+            }
+        );
+    });
+
+    // Leaves rung infinite animation handled by CSS class leaf-rung
+
+    // Notification bird and popup fade in
+    gsap.fromTo(
+        "#bird-notification-img",
+        { opacity: 0, x: -100 },
+        {
+            opacity: 1,
+            x: 0,
+            duration: 1.5,
+            scrollTrigger: {
+                trigger: "#notifications",
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
+        }
+    );
+    gsap.fromTo(
+        "#notification-popup",
+        { opacity: 0, y: 20 },
+        {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            scrollTrigger: {
+                trigger: "#notifications",
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
+        }
+    );
+
+    // Progress circle animation on scroll
+    gsap.fromTo(
+        "#progress-bar",
+        { strokeDashoffset: 339.292 },
+        {
+            strokeDashoffset: 169.646,
+            duration: 2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: "#progress-tracking",
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
+        }
+    );
+    gsap.fromTo(
+        "#progress-percent",
+        { opacity: 0, scale: 0.5 },
+        {
+            opacity: 1,
+            scale: 1,
+            duration: 1.5,
+            scrollTrigger: {
+                trigger: "#progress-tracking",
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
+        }
+    );
+
+    // Share achievement heart click triggers flower bloom
+    const btnShare = document.getElementById("btn-share");
+    const flowersImg = document.getElementById("flowers-img");
+    btnShare.addEventListener("click", () => {
+        flowersImg.style.opacity = "1";
+        flowersImg.classList.add("heart-bloom");
+        setTimeout(() => {
+            flowersImg.classList.remove("heart-bloom");
+            flowersImg.style.opacity = "0";
+        }, 1500);
+    });
+
+    // Consultation chatbot image fade in
+    gsap.fromTo(
+        "#doctor-chatbot-img",
+        { opacity: 0, x: 100 },
+        {
+            opacity: 1,
+            x: 0,
+            duration: 1.5,
+            scrollTrigger: {
+                trigger: "#consultation",
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
+        }
+    );
+
+    // Scroll-triggered branch "grow" animations
+    const branches = [
+        "#smoke-status",
+        "#quit-plan",
+        "#dashboard",
+        "#notifications",
+        "#progress-tracking",
+        "#share-achievement",
+        "#consultation",
+    ];
+
+    branches.forEach((selector) => {
+        ScrollTrigger.create({
+            trigger: selector,
+            start: "top 90%",
+            onEnter: () => {
+                gsap.fromTo(
+                    selector,
+                    { x: -200, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 1.2, ease: "power2.out" }
+                );
+                // Leaves inside the section get a gentle rung
+                const leaves = document.querySelectorAll(`${selector} .leaf-rung`);
+                leaves.forEach((leaf) => {
+                    gsap.to(leaf, {
+                        rotation: 5,
+                        duration: 1.5,
+                        yoyo: true,
+                        repeat: -1,
+                        ease: "sine.inOut",
+                        transformOrigin: "center bottom",
+                    });
+                });
+            },
+        });
+    });
+
+    // Footer root spread animation on scroll
+    gsap.to("#footer-roots-img", {
+        scaleX: 1,
+        opacity: 1,
+        duration: 2,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: "#footer",
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+        },
+    });
+
+    // Update health improvement text dynamically (mock)
+    const healthImprove = document.getElementById("health-improve");
+    setTimeout(() => {
+        healthImprove.textContent = "Đã cải thiện 20% chức năng phổi";
+    }, 2000);
+
+    // Active users count animation (mock)
+    const activeUsers = document.getElementById("active-users");
+    let count = 1234;
+    setInterval(() => {
+        count += Math.floor(Math.random() * 3);
+        activeUsers.textContent = count.toLocaleString("vi-VN");
+    }, 5000);
+</script>
+</body>
+</html>

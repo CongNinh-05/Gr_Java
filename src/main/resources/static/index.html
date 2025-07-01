@@ -1,0 +1,709 @@
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>
+        Smoke Free - Giúp bạn từ bỏ thuốc lá
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&amp;family=Open+Sans&amp;display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        /* Scrollbar for leaderboard table */
+        .scrollbar-thin::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background-color: #2e8b57;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 min-h-screen flex flex-col">
+<!-- Popup Reminder -->
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="popupReminder">
+    <div class="bg-white rounded-lg p-6 max-w-sm w-full text-center shadow-lg relative">
+        <button class="absolute top-2 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold" id="closePopup">
+            ×
+        </button>
+        <i class="fas fa-smile-beam text-green-600 text-4xl mb-4">
+        </i>
+        <h3 class="text-xl font-bold text-green-700 mb-2">
+            Bạn đã không hút thuốc 5 ngày!
+        </h3>
+        <p class="text-gray-700 mb-4">
+            Tiếp tục nhé! Bạn đang làm rất tốt.
+        </p>
+        <button class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded transition" id="popupBtn">
+            Tiếp tục
+        </button>
+    </div>
+</div>
+<!-- Header -->
+<header class="bg-white shadow sticky top-0 z-40">
+    <nav class="container mx-auto flex items-center justify-between py-4 px-4 md:px-0">
+        <a class="flex items-center space-x-3" href="#home">
+            <img alt="Biểu tượng lá phổi xanh tượng trưng cho sức khỏe" class="w-10 h-10" height="40" src="https://storage.googleapis.com/a1aa/image/225abb10-47b4-4381-3380-5452d2f8126b.jpg" width="40"/>
+            <span class="text-2xl font-bold text-green-700 font-montserrat select-none">
+      Smoke Free
+     </span>
+        </a>
+        <ul class="hidden md:flex space-x-8 font-semibold text-gray-700">
+            <li>
+                <a class="hover:text-green-700 transition" href="#home">
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <a class="hover:text-green-700 transition" href="#leaderboard">
+                    Bảng xếp hạng
+                </a>
+            </li>
+            <li>
+                <a class="hover:text-green-700 transition" href="#blog">
+                    Blog
+                </a>
+            </li>
+            <li>
+                <a class="hover:text-green-700 transition" href="#resources">
+                    Tài nguyên
+                </a>
+            </li>
+        </ul>
+        <!--<div class="relative">
+            <button class="flex items-center space-x-2 border border-green-700 text-green-700 font-semibold px-4 py-2 rounded hover:bg-green-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-green-500" id="accountBtn">
+                <i class="fas fa-user-circle text-xl">
+                </i>
+                <span>Tài khoản</span>
+                <i class="fas fa-chevron-down text-sm">
+                </i>
+            </button>
+            <ul class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50" id="accountDropdown">
+                <li>
+                    <a class="block px-4 py-2 hover:bg-green-100 text-green-700 font-semibold" href="#profile">
+                        Thông tin cá nhân
+                    </a>
+                </li>
+                <li>
+                    <a class="block px-4 py-2 hover:bg-green-100 text-green-700 font-semibold" href="#progress">
+                        Tiến độ
+                    </a>
+                </li>
+                <li>
+                    <button class="w-full text-left px-4 py-2 hover:bg-green-100 text-green-700 font-semibold" id="logoutBtn">
+                        Đăng xuất
+                    </button>
+                </li>
+            </ul>
+        </div>-->
+        <div class="relative">
+            <a href="account" class="flex items-center space-x-2 border border-green-700 text-green-700 font-semibold px-4 py-2 rounded hover:bg-green-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-green-500">
+                <i class="fas fa-user-circle text-xl"></i>
+                <span>Tài khoản</span>
+            </a>
+        </div>
+        <button class="md:hidden text-green-700 focus:outline-none focus:ring-2 focus:ring-green-500" id="mobileMenuBtn">
+            <i class="fas fa-bars text-2xl">
+            </i>
+        </button>
+    </nav>
+    <!-- Mobile Menu -->
+    <div class="hidden md:hidden bg-white border-t border-gray-200" id="mobileMenu">
+        <ul class="flex flex-col space-y-2 p-4 font-semibold text-green-700">
+            <li>
+                <a class="block hover:text-green-900" href="#home">
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <a class="block hover:text-green-900" href="#leaderboard">
+                    Bảng xếp hạng
+                </a>
+            </li>
+            <li>
+                <a class="block hover:text-green-900" href="#blog">
+                    Blog
+                </a>
+            </li>
+            <li>
+                <a class="block hover:text-green-900" href="#resources">
+                    Tài nguyên
+                </a>
+            </li>
+            <li>
+                <a class="block hover:text-green-900" href="#profile">
+                    Thông tin cá nhân
+                </a>
+            </li>
+            <li>
+                <a class="block hover:text-green-900" href="#progress">
+                    Tiến độ
+                </a>
+            </li>
+            <li>
+                <button class="w-full text-left hover:text-green-900 font-semibold" id="mobileLogoutBtn">
+                    Đăng xuất
+                </button>
+            </li>
+        </ul>
+    </div>
+</header>
+<main class="flex-grow">
+    <!-- Hero Section -->
+    <section class="relative bg-white" id="home">
+        <img alt="Người vui vẻ đang tận hưởng môi trường trong lành với cây xanh và bầu trời xanh" class="w-full h-60 sm:h-96 object-cover" height="600" src="https://storage.googleapis.com/a1aa/image/ad46712a-3a51-4682-9fcf-c213ef017722.jpg" width="1920"/>
+        <div class="absolute inset-0 bg-green-900 bg-opacity-50 flex flex-col justify-center items-center text-center px-4">
+            <h1 class="text-white text-3xl sm:text-5xl font-bold font-montserrat mb-4 drop-shadow-lg">
+                Bắt đầu hành trình từ bỏ thuốc lá hôm nay
+            </h1>
+            <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded shadow-lg transition focus:outline-none focus:ring-4 focus:ring-orange-400" id="startJourneyBtn">
+                Bắt đầu hành trình
+            </button>
+            <p class="mt-6 text-white text-lg sm:text-xl font-semibold drop-shadow-md">
+      <span class="text-2xl sm:text-4xl font-montserrat">
+       10,000+
+      </span>
+                người đã bỏ thuốc!
+            </p>
+        </div>
+    </section>
+    <!-- Leaderboard Section -->
+    <section class="container mx-auto px-4 py-12" id="leaderboard">
+        <h2 class="text-3xl font-bold text-green-700 font-montserrat mb-8 text-center">
+            Bảng xếp hạng
+        </h2>
+        <div class="overflow-x-auto scrollbar-thin">
+            <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+                <thead class="bg-green-100 text-green-800 font-semibold font-montserrat">
+                <tr>
+                    <th class="py-3 px-4 text-left">
+                        #
+                    </th>
+                    <th class="py-3 px-4 text-left">
+                        Avatar
+                    </th>
+                    <th class="py-3 px-4 text-left">
+                        Tên người dùng
+                    </th>
+                    <th class="py-3 px-4 text-left">
+                        Số ngày không hút thuốc
+                    </th>
+                    <th class="py-3 px-4 text-left">
+                        Đóng góp cộng đồng
+                    </th>
+                    <th class="py-3 px-4 text-left">
+                        Huy hiệu
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        1
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 1, khuôn mặt vui vẻ, tóc đen ngắn" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/2206caf9-f9c7-46aa-f79a-092220be6b6b.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Nguyễn Văn A
+                    </td>
+                    <td class="py-3 px-4">
+                        120
+                    </td>
+                    <td class="py-3 px-4">
+                        350 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu vàng cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/808c6d0a-b5a5-421d-c592-171315e02d9d.jpg" width="32"/>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        2
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 2, khuôn mặt nữ, tóc dài nâu" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/f6dc2319-08c5-4477-dbda-8590f2f6bd64.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Trần Thị B
+                    </td>
+                    <td class="py-3 px-4">
+                        110
+                    </td>
+                    <td class="py-3 px-4">
+                        320 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu bạc cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/3ca9f819-bfb5-447e-85bb-f9d477c1e512.jpg" width="32"/>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        3
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 3, khuôn mặt nam, tóc ngắn nâu" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/402d602f-d6ac-4029-25d5-403c50de35c0.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Lê Văn C
+                    </td>
+                    <td class="py-3 px-4">
+                        100
+                    </td>
+                    <td class="py-3 px-4">
+                        300 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu đồng cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/f2238315-d77b-4e88-d7f3-9940909ef753.jpg" width="32"/>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        4
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 4, khuôn mặt nữ, tóc ngắn đen" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/0907a8d6-266f-4fe4-7bf0-24f5f81bbf5b.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Phạm Thị D
+                    </td>
+                    <td class="py-3 px-4">
+                        90
+                    </td>
+                    <td class="py-3 px-4">
+                        280 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu đồng cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/f2238315-d77b-4e88-d7f3-9940909ef753.jpg" width="32"/>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        5
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 5, khuôn mặt nam, tóc đen ngắn" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/376175de-5398-4b97-5114-8560ed615217.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Hoàng Văn E
+                    </td>
+                    <td class="py-3 px-4">
+                        85
+                    </td>
+                    <td class="py-3 px-4">
+                        270 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu đồng cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/f2238315-d77b-4e88-d7f3-9940909ef753.jpg" width="32"/>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        6
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 6, khuôn mặt nữ, tóc dài đen" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/f52d41f8-b7cd-40ee-abff-7c2fe1b9c178.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Đặng Thị F
+                    </td>
+                    <td class="py-3 px-4">
+                        80
+                    </td>
+                    <td class="py-3 px-4">
+                        260 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu đồng cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/f2238315-d77b-4e88-d7f3-9940909ef753.jpg" width="32"/>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        7
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 7, khuôn mặt nam, tóc nâu ngắn" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/3afae4cb-64a9-446a-a888-f384d4b589c0.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Trương Văn G
+                    </td>
+                    <td class="py-3 px-4">
+                        75
+                    </td>
+                    <td class="py-3 px-4">
+                        250 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu đồng cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/f2238315-d77b-4e88-d7f3-9940909ef753.jpg" width="32"/>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        8
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 8, khuôn mặt nữ, tóc ngắn nâu" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/a612bd37-9a72-4f36-fd66-341043b2e22b.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Lê Thị H
+                    </td>
+                    <td class="py-3 px-4">
+                        70
+                    </td>
+                    <td class="py-3 px-4">
+                        240 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu đồng cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/f2238315-d77b-4e88-d7f3-9940909ef753.jpg" width="32"/>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        9
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 9, khuôn mặt nam, tóc đen ngắn" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/e2fca9cb-5d03-4996-ce78-00135a3740c5.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Phan Văn I
+                    </td>
+                    <td class="py-3 px-4">
+                        65
+                    </td>
+                    <td class="py-3 px-4">
+                        230 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu đồng cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/f2238315-d77b-4e88-d7f3-9940909ef753.jpg" width="32"/>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-200 hover:bg-green-50 transition">
+                    <td class="py-3 px-4 font-semibold">
+                        10
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Avatar người dùng số 10, khuôn mặt nữ, tóc dài nâu" class="rounded-full w-12 h-12 object-cover" height="48" src="https://storage.googleapis.com/a1aa/image/69495aa4-c2ce-4226-31b9-2fe64707b327.jpg" width="48"/>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-green-700">
+                        Vũ Thị J
+                    </td>
+                    <td class="py-3 px-4">
+                        60
+                    </td>
+                    <td class="py-3 px-4">
+                        220 điểm
+                    </td>
+                    <td class="py-3 px-4">
+                        <img alt="Huy hiệu đồng cho thành tích xuất sắc" class="inline-block" height="32" src="https://storage.googleapis.com/a1aa/image/f2238315-d77b-4e88-d7f3-9940909ef753.jpg" width="32"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- Blog Section -->
+    <section class="bg-green-50 py-12" id="blog">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-green-700 font-montserrat mb-8 text-center">
+                Blog &amp; Chuyên mục
+            </h2>
+            <div class="flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
+                <!-- Kinh nghiệm cá nhân -->
+                <div class="flex-1 bg-white rounded-lg shadow p-6">
+                    <h3 class="text-2xl font-bold text-green-700 font-montserrat mb-4">
+                        Kinh nghiệm cá nhân
+                    </h3>
+                    <article class="mb-6">
+                        <img alt="Người đàn ông đang thiền trong công viên, ánh sáng ban mai" class="rounded-lg mb-3 object-cover w-full h-48" height="300" src="https://storage.googleapis.com/a1aa/image/71ab1fec-2983-41fe-10e3-37faacd98570.jpg" width="600"/>
+                        <h4 class="text-xl font-semibold text-green-800 mb-2">
+                            Hành trình 30 ngày không thuốc lá
+                        </h4>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            Đọc thêm
+                        </button>
+                    </article>
+                    <article class="mb-6">
+                        <img alt="Người phụ nữ cười tươi, đứng cạnh cây xanh trong công viên" class="rounded-lg mb-3 object-cover w-full h-48" height="300" src="https://storage.googleapis.com/a1aa/image/d2a5c42c-acb8-4e54-57e7-d7207037395b.jpg" width="600"/>
+                        <h4 class="text-xl font-semibold text-green-800 mb-2">
+                            Làm thế nào để vượt qua cơn thèm thuốc
+                        </h4>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            Đọc thêm
+                        </button>
+                    </article>
+                    <article>
+                        <img alt="Người đàn ông trẻ tuổi đang chạy bộ ngoài trời, trời nắng đẹp" class="rounded-lg mb-3 object-cover w-full h-48" height="300" src="https://storage.googleapis.com/a1aa/image/19877c56-6a12-4759-34ad-7f3a161c9ca9.jpg" width="600"/>
+                        <h4 class="text-xl font-semibold text-green-800 mb-2">
+                            Tập thể dục giúp giảm stress khi cai thuốc
+                        </h4>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            Đọc thêm
+                        </button>
+                    </article>
+                </div>
+                <!-- Kiến thức y tế -->
+                <div class="flex-1 bg-white rounded-lg shadow p-6">
+                    <h3 class="text-2xl font-bold text-green-700 font-montserrat mb-4">
+                        Kiến thức y tế (bác sĩ tư vấn)
+                    </h3>
+                    <article class="mb-6">
+                        <img alt="Bác sĩ đang tư vấn cho bệnh nhân trong phòng khám hiện đại" class="rounded-lg mb-3 object-cover w-full h-48" height="300" src="https://storage.googleapis.com/a1aa/image/4b43ad6b-a865-4aae-a513-657b99479b78.jpg" width="600"/>
+                        <h4 class="text-xl font-semibold text-green-800 mb-2">
+                            Tác hại của thuốc lá đối với phổi
+                        </h4>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            Đọc thêm
+                        </button>
+                    </article>
+                    <article class="mb-6">
+                        <img alt="Hình ảnh phổi khỏe mạnh và phổi bị tổn thương do thuốc lá" class="rounded-lg mb-3 object-cover w-full h-48" height="300" src="https://storage.googleapis.com/a1aa/image/21ea6b74-d2f5-46f3-2d79-7cfbadba0b73.jpg" width="600"/>
+                        <h4 class="text-xl font-semibold text-green-800 mb-2">
+                            Lợi ích sức khỏe khi cai nghiện thuốc lá
+                        </h4>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            Đọc thêm
+                        </button>
+                    </article>
+                    <article>
+                        <img alt="Bác sĩ đang giải thích biểu đồ sức khỏe cho bệnh nhân" class="rounded-lg mb-3 object-cover w-full h-48" height="300" src="https://storage.googleapis.com/a1aa/image/784fee37-e2eb-4522-b01a-6a76dd17c779.jpg" width="600"/>
+                        <h4 class="text-xl font-semibold text-green-800 mb-2">
+                            Cách giảm cơn thèm thuốc hiệu quả
+                        </h4>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            Đọc thêm
+                        </button>
+                    </article>
+                </div>
+                <!-- Mẹo đối phó cơn thèm thuốc -->
+                <div class="flex-1 bg-white rounded-lg shadow p-6">
+                    <h3 class="text-2xl font-bold text-green-700 font-montserrat mb-4">
+                        Mẹo đối phó cơn thèm thuốc
+                    </h3>
+                    <article class="mb-6">
+                        <img alt="Người đang uống nước và thư giãn trên ghế sofa" class="rounded-lg mb-3 object-cover w-full h-48" height="300" src="https://storage.googleapis.com/a1aa/image/18c681fa-4b17-4046-e4ef-1b7980da2513.jpg" width="600"/>
+                        <h4 class="text-xl font-semibold text-green-800 mb-2">
+                            Uống nước và hít thở sâu
+                        </h4>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            Đọc thêm
+                        </button>
+                    </article>
+                    <article class="mb-6">
+                        <img alt="Người đang tập yoga ngoài trời, ánh sáng tự nhiên" class="rounded-lg mb-3 object-cover w-full h-48" height="300" src="https://storage.googleapis.com/a1aa/image/93438ee1-3b1c-405b-99bc-f767584d4033.jpg" width="600"/>
+                        <h4 class="text-xl font-semibold text-green-800 mb-2">
+                            Tập thể dục nhẹ nhàng
+                        </h4>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            Đọc thêm
+                        </button>
+                    </article>
+                    <article>
+                        <img alt="Người đang viết nhật ký cảm xúc trên bàn làm việc" class="rounded-lg mb-3 object-cover w-full h-48" height="300" src="https://storage.googleapis.com/a1aa/image/74395276-e174-4d03-f405-8547b63fdedd.jpg" width="600"/>
+                        <h4 class="text-xl font-semibold text-green-800 mb-2">
+                            Ghi lại cảm xúc và tiến độ
+                        </h4>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            Đọc thêm
+                        </button>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="bg-green-50 py-12" id="resources">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-green-700 font-montserrat mb-8 text-center">
+                Tài nguyên
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Video -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-2xl font-bold text-green-700 font-montserrat mb-4">
+                        Video
+                    </h3>
+                    <div class="aspect-w-16 aspect-h-9">
+                        <iframe allowfullscreen="" class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/5qap5aO4i9A" title="Video về cai nghiện thuốc lá">
+                        </iframe>
+                    </div>
+                </div>
+                <!-- Infographic -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-2xl font-bold text-green-700 font-montserrat mb-4">
+                        Infographic
+                    </h3>
+                    <img alt="Infographic minh họa các bước và lợi ích khi cai nghiện thuốc lá" class="rounded-lg w-full object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/d96dfb7e-fdd9-4204-906e-be98a70d5444.jpg" width="600"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200 py-8 mt-12">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+        <div class="flex space-x-6 text-green-700 font-semibold">
+            <a class="hover:text-green-900 transition" href="#policy">
+                Chính sách
+            </a>
+            <a class="hover:text-green-900 transition" href="#faq">
+                FAQ
+            </a>
+            <a class="hover:text-green-900 transition" href="#contact">
+                Liên hệ
+            </a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a aria-label="Facebook group hỗ trợ" class="text-green-700 hover:text-green-900 transition text-2xl" href="https://www.facebook.com/groups/smokefree" rel="noopener" target="_blank">
+                <i class="fab fa-facebook-square">
+                </i>
+            </a>
+            <span class="text-gray-500 text-sm italic max-w-xs text-center md:text-left">
+      Kết quả phụ thuộc vào thể trạng từng người.
+     </span>
+        </div>
+    </div>
+</footer>
+<!-- Confetti Animation Container -->
+<canvas class="fixed top-0 left-0 w-full h-full pointer-events-none z-50 hidden" id="confettiCanvas">
+</canvas>
+<script>
+    // Dropdown toggle
+    const accountBtn = document.getElementById('accountBtn');
+    const accountDropdown = document.getElementById('accountDropdown');
+    accountBtn.addEventListener('click', () => {
+        accountDropdown.classList.toggle('hidden');
+    });
+
+    // Close dropdown if clicked outside
+    window.addEventListener('click', (e) => {
+        if (!accountBtn.contains(e.target) && !accountDropdown.contains(e.target)) {
+            accountDropdown.classList.add('hidden');
+        }
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Mobile logout button
+    const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+    mobileLogoutBtn.addEventListener('click', () => {
+        alert('Bạn đã đăng xuất.');
+    });
+
+    // Logout button desktop
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', () => {
+        alert('Bạn đã đăng xuất.');
+    });
+
+    // Popup reminder logic
+    const popupReminder = document.getElementById('popupReminder');
+    const closePopup = document.getElementById('closePopup');
+    const popupBtn = document.getElementById('popupBtn');
+
+    function showPopup() {
+        popupReminder.classList.remove('hidden');
+    }
+    function hidePopup() {
+        popupReminder.classList.add('hidden');
+    }
+
+    closePopup.addEventListener('click', hidePopup);
+    popupBtn.addEventListener('click', hidePopup);
+
+    // Show popup after 1.5 seconds (simulate user opened app and 5 days quit)
+    setTimeout(showPopup, 1500);
+
+    // Confetti animation for badge achievement
+    const confettiCanvas = document.getElementById('confettiCanvas');
+    const ctx = confettiCanvas.getContext('2d');
+    let confettiElements = [];
+    let animationFrameId;
+
+    function resizeCanvas() {
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Confetti {
+        constructor() {
+            this.x = Math.random() * confettiCanvas.width;
+            this.y = Math.random() * confettiCanvas.height - confettiCanvas.height;
+            this.size = Math.random() * 8 + 4;
+            this.speed = Math.random() * 3 + 2;
+            this.angle = Math.random() * 360;
+            this.spin = (Math.random() - 0.5) * 0.2;
+            this.color = `hsl(${Math.random() * 60 + 30}, 100%, 50%)`; // orange-yellow hues
+        }
+        update() {
+            this.y += this.speed;
+            this.angle += this.spin;
+            if (this.y > confettiCanvas.height) {
+                this.y = -this.size;
+                this.x = Math.random() * confettiCanvas.width;
+            }
+        }
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
+            ctx.fillStyle = this.color;
+            ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size / 3);
+            ctx.restore();
+        }
+    }
+
+    function createConfetti() {
+        confettiElements = [];
+        for (let i = 0; i < 150; i++) {
+            confettiElements.push(new Confetti());
+        }
+    }
+
+    function animateConfetti() {
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        confettiElements.forEach((c) => {
+            c.update();
+            c.draw();
+        });
+        animationFrameId = requestAnimationFrame(animateConfetti);
+    }
+
+    // Trigger confetti animation on badge hover
+    const badges = document.querySelectorAll('#progress .relative.group');
+    badges.forEach((badge) => {
+        badge.addEventListener('mouseenter', () => {
+            confettiCanvas.classList.remove('hidden');
+            createConfetti();
+            animateConfetti();
+        });
+        badge.addEventListener('mouseleave', () => {
+            confettiCanvas.classList.add('hidden');
+            cancelAnimationFrame(animationFrameId);
+            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        });
+    });
+
+    // Start Journey button click
+    const startJourneyBtn = document.getElementById('startJourneyBtn');
+    startJourneyBtn.addEventListener('click', () => {
+        alert('Chuyển đến trang đăng ký hoặc tạo lộ trình.');
+    });
+</script>
+</body>
+</html>

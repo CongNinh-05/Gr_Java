@@ -1,0 +1,1155 @@
+<html class="scroll-smooth" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>
+        Smoke Free Admin Dashboard
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Scrollbar for sidebar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #4caf50;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+<div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="flex flex-col bg-green-900 text-white w-64 min-w-[16rem] max-w-[16rem] overflow-y-auto" id="sidebar">
+        <div class="flex items-center justify-center gap-3 px-6 py-5 border-b border-green-700">
+            <img alt="Logo Smoke Free, white letters SF on dark green background" class="w-10 h-10 rounded" height="40" src="https://storage.googleapis.com/a1aa/image/23efbc89-ea2d-4a8f-7682-5c7195326c7c.jpg" width="40"/>
+            <div>
+                <h1 class="text-xl font-bold leading-none">
+                    Smoke Free
+                </h1>
+                <p class="text-xs text-green-300 font-semibold">
+                    Admin v1.0
+                </p>
+            </div>
+        </div>
+        <nav class="flex flex-col mt-4 space-y-1 px-2">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-md hover:bg-green-700 transition-colors font-semibold" href="#dashboard">
+                <i class="fas fa-chart-pie w-5 text-lg">
+                </i>
+                <span>
+       Tổng quan hệ thống
+      </span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-md hover:bg-green-700 transition-colors font-semibold" href="#user-management">
+                <i class="fas fa-users w-5 text-lg">
+                </i>
+                <span>
+       Quản lý người dùng
+      </span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-md hover:bg-green-700 transition-colors font-semibold" href="#coach-management">
+                <i class="fas fa-user-md w-5 text-lg">
+                </i>
+                <span>
+       Quản lý coach
+      </span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-md hover:bg-green-700 transition-colors font-semibold" href="#content-management">
+                <i class="fas fa-file-alt w-5 text-lg">
+                </i>
+                <span>
+       Quản lý nội dung
+      </span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-md hover:bg-green-700 transition-colors font-semibold" href="#membership-management">
+                <i class="fas fa-wallet w-5 text-lg">
+                </i>
+                <span>
+       Quản lý gói membership
+      </span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-md hover:bg-green-700 transition-colors font-semibold" href="#reports-analytics">
+                <i class="fas fa-chart-line w-5 text-lg">
+                </i>
+                <span>
+       Báo cáo &amp; Analytics
+      </span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-md hover:bg-green-700 transition-colors font-semibold" href="#system-settings">
+                <i class="fas fa-cogs w-5 text-lg">
+                </i>
+                <span>
+       Cài đặt hệ thống
+      </span>
+            </a>
+        </nav>
+        <div class="mt-auto px-6 py-4 text-green-300 text-xs select-none">
+            © 2024 Smoke Free Admin
+        </div>
+    </aside>
+    <!-- Main content wrapper -->
+    <div class="flex flex-col flex-1 overflow-hidden">
+        <!-- Header -->
+        <header class="flex items-center justify-between bg-white border-b border-gray-200 px-6 py-3 sticky top-0 z-30" id="header">
+            <form class="flex items-center flex-1 max-w-md bg-gray-100 rounded-md px-3 py-2 shadow-inner" id="searchForm" onsubmit="event.preventDefault()">
+                <i class="fas fa-search text-gray-400 mr-2">
+                </i>
+                <input aria-label="Tìm kiếm người dùng hoặc coach" class="bg-transparent outline-none w-full text-gray-700 placeholder-gray-400" placeholder="Tìm kiếm người dùng/coach..." type="search"/>
+            </form>
+            <div class="flex items-center gap-6 ml-6">
+                <!-- Notifications -->
+                <button aria-label="Thông báo" class="relative text-gray-600 hover:text-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 rounded" id="notificationBtn">
+                    <i class="fas fa-bell fa-lg">
+                    </i>
+                    <span class="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold rounded-full px-1.5 py-0.5 animate-pulse" id="notificationBadge">
+        3
+       </span>
+                </button>
+                <!-- Admin Profile Dropdown -->
+                <div class="relative" x-data="{ open: false }">
+                    <button aria-expanded="false" aria-haspopup="true" class="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-green-500 rounded" id="profileBtn" onclick="document.getElementById('profileDropdown').classList.toggle('hidden')">
+                        <img alt="Ảnh đại diện admin, hình tròn màu xanh lá đậm" class="w-8 h-8 rounded-full object-cover" height="32" src="https://storage.googleapis.com/a1aa/image/fb066776-0c23-4233-0542-92ff63949498.jpg" width="32"/>
+                        <span class="font-semibold text-gray-700">
+         Admin
+        </span>
+                        <i class="fas fa-chevron-down text-gray-500">
+                        </i>
+                    </button>
+                    <div aria-labelledby="profileBtn" aria-orientation="vertical" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50" id="profileDropdown" role="menu">
+                        <a class="block px-4 py-2 text-gray-700 hover:bg-green-100" href="#change-password" role="menuitem">
+                            Đổi mật khẩu
+                        </a>
+                        <a class="block px-4 py-2 text-gray-700 hover:bg-green-100" href="#logout" role="menuitem">
+                            Đăng xuất
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Progress bar for loading data -->
+        <div aria-hidden="true" class="h-1 bg-green-600 w-0 transition-all duration-500" id="progressBar">
+        </div>
+        <!-- Main content scrollable -->
+        <main class="flex-1 overflow-y-auto p-6 space-y-8 bg-gray-50" id="mainContent" tabindex="0">
+            <!-- Dashboard Section -->
+            <section class="space-y-6" id="dashboard">
+                <h2 class="text-2xl font-bold text-green-900">
+                    Tổng quan hệ thống
+                </h2>
+                <!-- Quick stats -->
+                <div aria-label="Thống kê nhanh" class="grid grid-cols-1 sm:grid-cols-3 gap-6" role="region">
+                    <div class="bg-white rounded-lg shadow p-5 flex flex-col items-center text-green-900" tabindex="0">
+                        <i class="fas fa-users fa-3x mb-3">
+                        </i>
+                        <p class="text-lg font-semibold">
+                            Tổng người dùng đăng ký
+                        </p>
+                        <p class="text-3xl font-extrabold mt-1">
+                            12,345
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-5 flex flex-col items-center text-green-900" tabindex="0">
+                        <i class="fas fa-percentage fa-3x mb-3">
+                        </i>
+                        <p class="text-lg font-semibold">
+                            Tỉ lệ thành công
+                        </p>
+                        <p class="text-3xl font-extrabold mt-1">
+                            78%
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-5 flex flex-col items-center text-green-900" tabindex="0">
+                        <i class="fas fa-wallet fa-3x mb-3">
+                        </i>
+                        <p class="text-lg font-semibold">
+                            Doanh thu từ gói membership
+                        </p>
+                        <p class="text-3xl font-extrabold mt-1">
+                            1,234,567,890₫
+                        </p>
+                    </div>
+                </div>
+                <!-- Charts -->
+                <div aria-label="Biểu đồ thống kê" class="grid grid-cols-1 lg:grid-cols-3 gap-6" role="region">
+                    <!-- Line chart placeholder -->
+                    <div aria-label="Biểu đồ tăng trưởng người dùng theo tháng" class="bg-white rounded-lg shadow p-5 flex flex-col" tabindex="0">
+                        <h3 class="text-lg font-semibold mb-3 text-green-900">
+                            Tăng trưởng người dùng
+                        </h3>
+                        <img alt="Biểu đồ đường thể hiện tăng trưởng người dùng theo tháng, màu xanh lá đậm trên nền trắng" class="w-full h-auto rounded" height="200" src="https://storage.googleapis.com/a1aa/image/41783975-9038-408f-ca5d-b83c2fe75230.jpg" width="400"/>
+                    </div>
+                    <!-- Pie chart placeholder -->
+                    <div aria-label="Biểu đồ phân bổ gói membership" class="bg-white rounded-lg shadow p-5 flex flex-col" tabindex="0">
+                        <h3 class="text-lg font-semibold mb-3 text-green-900">
+                            Phân bổ gói membership
+                        </h3>
+                        <img alt="Biểu đồ hình tròn thể hiện phân bổ các gói membership, màu sắc đa dạng trên nền trắng" class="w-full h-auto rounded" height="200" src="https://storage.googleapis.com/a1aa/image/bec556a3-b606-461d-eceb-725b4e778dca.jpg" width="400"/>
+                    </div>
+                    <!-- Bar chart placeholder -->
+                    <div aria-label="Biểu đồ top coach hiệu quả" class="bg-white rounded-lg shadow p-5 flex flex-col" tabindex="0">
+                        <h3 class="text-lg font-semibold mb-3 text-green-900">
+                            Top coach hiệu quả
+                        </h3>
+                        <img alt="Biểu đồ cột thể hiện top coach hiệu quả dựa trên đánh giá, màu xanh lá đậm trên nền trắng" class="w-full h-auto rounded" height="200" src="https://storage.googleapis.com/a1aa/image/20fcf624-b750-4959-08c5-e468b3075284.jpg" width="400"/>
+                    </div>
+                </div>
+            </section>
+            <!-- User Management Section -->
+            <section class="space-y-6" id="user-management">
+                <h2 class="text-2xl font-bold text-green-900">
+                    Quản lý người dùng
+                </h2>
+                <!-- Filters -->
+                <form aria-label="Bộ lọc danh sách người dùng" class="flex flex-col sm:flex-row sm:items-center gap-4 bg-white p-4 rounded shadow" id="userFilterForm" onsubmit="event.preventDefault()">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 flex-1">
+                        <label class="font-semibold text-gray-700" for="filterMembership">
+                            Gói membership:
+                        </label>
+                        <select class="border border-gray-300 rounded px-3 py-2 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-green-500" id="filterMembership" name="filterMembership">
+                            <option value="">
+                                Tất cả
+                            </option>
+                            <option value="basic">
+                                Basic
+                            </option>
+                            <option value="standard">
+                                Standard
+                            </option>
+                            <option value="premium">
+                                Premium
+                            </option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 flex-1">
+                        <label class="font-semibold text-gray-700" for="filterStatus">
+                            Trạng thái:
+                        </label>
+                        <select class="border border-gray-300 rounded px-3 py-2 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-green-500" id="filterStatus" name="filterStatus">
+                            <option value="">
+                                Tất cả
+                            </option>
+                            <option value="active">
+                                Active
+                            </option>
+                            <option value="banned">
+                                Banned
+                            </option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 flex-1">
+                        <label class="font-semibold text-gray-700" for="filterDate">
+                            Ngày đăng ký:
+                        </label>
+                        <input class="border border-gray-300 rounded px-3 py-2 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-green-500" id="filterDate" name="filterDate" type="date"/>
+                    </div>
+                    <button class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition" type="submit">
+                        Lọc
+                    </button>
+                </form>
+                <!-- User Table -->
+                <div class="overflow-x-auto bg-white rounded shadow">
+                    <table aria-label="Danh sách người dùng" class="min-w-full divide-y divide-gray-200" role="table">
+                        <thead class="bg-green-900 text-white">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                Tên
+                            </th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                Email
+                            </th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                Ngày đăng ký
+                            </th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                Gói membership
+                            </th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                Trạng thái
+                            </th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold" scope="col" tabindex="0">
+                                Hành động
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                        <tr class="hover:bg-green-50" tabindex="0">
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Nguyễn Văn A
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                vana@example.com
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                2023-01-15
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Premium
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+           <span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-green-200 text-green-800">
+            Active
+           </span>
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                <button aria-label="Khóa tài khoản Nguyễn Văn A" class="text-red-600 hover:text-red-800 focus:outline-none" onclick="confirmAction('Khóa tài khoản Nguyễn Văn A?')">
+                                    <i class="fas fa-lock">
+                                    </i>
+                                </button>
+                                <button aria-label="Xóa tài khoản Nguyễn Văn A" class="text-gray-600 hover:text-gray-800 focus:outline-none" onclick="confirmAction('Xóa tài khoản Nguyễn Văn A?')">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </button>
+                                <button aria-label="Xem chi tiết Nguyễn Văn A" class="text-green-700 hover:text-green-900 focus:outline-none" onclick="showUserDetails('Nguyễn Văn A')">
+                                    <i class="fas fa-eye">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50" tabindex="0">
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Trần Thị B
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                thib@example.com
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                2023-02-20
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Standard
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+           <span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-green-200 text-green-800">
+            Active
+           </span>
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                <button aria-label="Khóa tài khoản Trần Thị B" class="text-red-600 hover:text-red-800 focus:outline-none" onclick="confirmAction('Khóa tài khoản Trần Thị B?')">
+                                    <i class="fas fa-lock">
+                                    </i>
+                                </button>
+                                <button aria-label="Xóa tài khoản Trần Thị B" class="text-gray-600 hover:text-gray-800 focus:outline-none" onclick="confirmAction('Xóa tài khoản Trần Thị B?')">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </button>
+                                <button aria-label="Xem chi tiết Trần Thị B" class="text-green-700 hover:text-green-900 focus:outline-none" onclick="showUserDetails('Trần Thị B')">
+                                    <i class="fas fa-eye">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50" tabindex="0">
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Lê Văn C
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                levanc@example.com
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                2023-03-05
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Basic
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+           <span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-red-200 text-red-800">
+            Banned
+           </span>
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                <button aria-label="Mở khóa tài khoản Lê Văn C" class="text-green-600 hover:text-green-800 focus:outline-none" onclick="confirmAction('Mở khóa tài khoản Lê Văn C?')">
+                                    <i class="fas fa-unlock">
+                                    </i>
+                                </button>
+                                <button aria-label="Xóa tài khoản Lê Văn C" class="text-gray-600 hover:text-gray-800 focus:outline-none" onclick="confirmAction('Xóa tài khoản Lê Văn C?')">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </button>
+                                <button aria-label="Xem chi tiết Lê Văn C" class="text-green-700 hover:text-green-900 focus:outline-none" onclick="showUserDetails('Lê Văn C')">
+                                    <i class="fas fa-eye">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50" tabindex="0">
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Phạm Thị D
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                pthid@example.com
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                2023-04-10
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Premium
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+           <span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-green-200 text-green-800">
+            Active
+           </span>
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                <button aria-label="Khóa tài khoản Phạm Thị D" class="text-red-600 hover:text-red-800 focus:outline-none" onclick="confirmAction('Khóa tài khoản Phạm Thị D?')">
+                                    <i class="fas fa-lock">
+                                    </i>
+                                </button>
+                                <button aria-label="Xóa tài khoản Phạm Thị D" class="text-gray-600 hover:text-gray-800 focus:outline-none" onclick="confirmAction('Xóa tài khoản Phạm Thị D?')">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </button>
+                                <button aria-label="Xem chi tiết Phạm Thị D" class="text-green-700 hover:text-green-900 focus:outline-none" onclick="showUserDetails('Phạm Thị D')">
+                                    <i class="fas fa-eye">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50" tabindex="0">
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Hoàng Văn E
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                hoangve@example.com
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                2023-05-12
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Standard
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+           <span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-green-200 text-green-800">
+            Active
+           </span>
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                <button aria-label="Khóa tài khoản Hoàng Văn E" class="text-red-600 hover:text-red-800 focus:outline-none" onclick="confirmAction('Khóa tài khoản Hoàng Văn E?')">
+                                    <i class="fas fa-lock">
+                                    </i>
+                                </button>
+                                <button aria-label="Xóa tài khoản Hoàng Văn E" class="text-gray-600 hover:text-gray-800 focus:outline-none" onclick="confirmAction('Xóa tài khoản Hoàng Văn E?')">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </button>
+                                <button aria-label="Xem chi tiết Hoàng Văn E" class="text-green-700 hover:text-green-900 focus:outline-none" onclick="showUserDetails('Hoàng Văn E')">
+                                    <i class="fas fa-eye">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- Coach Management Section -->
+            <section class="space-y-6" id="coach-management">
+                <h2 class="text-2xl font-bold text-green-900">
+                    Quản lý coach
+                </h2>
+                <!-- Coach Registration Review -->
+                <div class="bg-white rounded shadow p-6 space-y-4">
+                    <h3 class="text-lg font-semibold text-green-900">
+                        Duyệt đăng ký coach
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table aria-label="Danh sách đăng ký coach" class="min-w-full divide-y divide-gray-200" role="table">
+                            <thead class="bg-green-900 text-white">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    Tên coach
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    CV
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    Chứng chỉ
+                                </th>
+                                <th class="px-4 py-3 text-center text-sm font-semibold" scope="col" tabindex="0">
+                                    Hành động
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-green-50" tabindex="0">
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    Phạm Minh Tâm
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    <a class="text-green-700 hover:underline" href="https://placehold.co/200x150/png?text=CV+Phạm+Minh+Tâm" rel="noopener noreferrer" target="_blank">
+                                        Xem CV
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    <a class="text-green-700 hover:underline" href="https://placehold.co/200x150/png?text=Chứng+chỉ+Phạm+Minh+Tâm" rel="noopener noreferrer" target="_blank">
+                                        Xem chứng chỉ
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                    <button aria-label="Duyệt đăng ký coach Phạm Minh Tâm" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded focus:outline-none" onclick="confirmAction('Duyệt đăng ký coach Phạm Minh Tâm?')">
+                                        Duyệt
+                                    </button>
+                                    <button aria-label="Từ chối đăng ký coach Phạm Minh Tâm" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded focus:outline-none" onclick="confirmAction('Từ chối đăng ký coach Phạm Minh Tâm?')">
+                                        Từ chối
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-green-50" tabindex="0">
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    Lê Thị Hương
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    <a class="text-green-700 hover:underline" href="https://placehold.co/200x150/png?text=CV+Lê+Thị+Hương" rel="noopener noreferrer" target="_blank">
+                                        Xem CV
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    <a class="text-green-700 hover:underline" href="https://placehold.co/200x150/png?text=Chứng+chỉ+Lê+Thị+Hương" rel="noopener noreferrer" target="_blank">
+                                        Xem chứng chỉ
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                    <button aria-label="Duyệt đăng ký coach Lê Thị Hương" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded focus:outline-none" onclick="confirmAction('Duyệt đăng ký coach Lê Thị Hương?')">
+                                        Duyệt
+                                    </button>
+                                    <button aria-label="Từ chối đăng ký coach Lê Thị Hương" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded focus:outline-none" onclick="confirmAction('Từ chối đăng ký coach Lê Thị Hương?')">
+                                        Từ chối
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Coach Ratings -->
+                <div class="bg-white rounded shadow p-6 space-y-4">
+                    <h3 class="text-lg font-semibold text-green-900">
+                        Đánh giá coach
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table aria-label="Danh sách đánh giá coach" class="min-w-full divide-y divide-gray-200" role="table">
+                            <thead class="bg-green-900 text-white">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    Tên coach
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    Đánh giá trung bình
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    Số buổi tư vấn
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    Tỉ lệ thành công
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-green-50" tabindex="0">
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    Phạm Minh Tâm
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    <div aria-label="Đánh giá 4.5 trên 5 sao" class="flex items-center gap-1">
+                                        <i class="fas fa-star text-yellow-400">
+                                        </i>
+                                        <i class="fas fa-star text-yellow-400">
+                                        </i>
+                                        <i class="fas fa-star text-yellow-400">
+                                        </i>
+                                        <i class="fas fa-star text-yellow-400">
+                                        </i>
+                                        <i class="fas fa-star-half-alt text-yellow-400">
+                                        </i>
+                                        <span class="ml-2 text-sm font-semibold text-gray-700">
+              4.5
+             </span>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    120
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    85%
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-green-50" tabindex="0">
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    Lê Thị Hương
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    <div aria-label="Đánh giá 4.0 trên 5 sao" class="flex items-center gap-1">
+                                        <i class="fas fa-star text-yellow-400">
+                                        </i>
+                                        <i class="fas fa-star text-yellow-400">
+                                        </i>
+                                        <i class="fas fa-star text-yellow-400">
+                                        </i>
+                                        <i class="fas fa-star text-yellow-400">
+                                        </i>
+                                        <i class="far fa-star text-yellow-400">
+                                        </i>
+                                        <span class="ml-2 text-sm font-semibold text-gray-700">
+              4.0
+             </span>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    95
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    78%
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <!-- Content Management Section -->
+            <section class="space-y-6" id="content-management">
+                <h2 class="text-2xl font-bold text-green-900">
+                    Quản lý nội dung
+                </h2>
+                <!-- Blog/Video Management -->
+                <div class="bg-white rounded shadow p-6 space-y-4">
+                    <h3 class="text-lg font-semibold text-green-900">
+                        Blog / Video
+                    </h3>
+                    <div class="flex flex-col sm:flex-row sm:justify-between items-center gap-4 mb-4">
+                        <button aria-label="Thêm bài viết mới" class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" onclick="alert('Chức năng thêm bài viết mới')">
+                            Thêm bài viết
+                        </button>
+                        <button aria-label="Upload video mới" class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" onclick="alert('Chức năng upload video mới')">
+                            Upload video
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table aria-label="Danh sách bài viết và video" class="min-w-full divide-y divide-gray-200" role="table">
+                            <thead class="bg-green-900 text-white">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    Tiêu đề
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    Loại
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                    Ngày tạo
+                                </th>
+                                <th class="px-4 py-3 text-center text-sm font-semibold" scope="col" tabindex="0">
+                                    Hành động
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-green-50" tabindex="0">
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    Lợi ích của việc cai thuốc
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    Blog
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    2023-05-01
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                    <button aria-label="Chỉnh sửa bài viết Lợi ích của việc cai thuốc" class="text-yellow-600 hover:text-yellow-800 focus:outline-none" onclick="alert('Chỉnh sửa bài viết Lợi ích của việc cai thuốc')">
+                                        <i class="fas fa-edit">
+                                        </i>
+                                    </button>
+                                    <button aria-label="Xóa bài viết Lợi ích của việc cai thuốc" class="text-red-600 hover:text-red-800 focus:outline-none" onclick="confirmAction('Xóa bài viết Lợi ích của việc cai thuốc?')">
+                                        <i class="fas fa-trash-alt">
+                                        </i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-green-50" tabindex="0">
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    Video hướng dẫn thở sâu
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    Video
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    2023-04-20
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                    <button aria-label="Chỉnh sửa video Video hướng dẫn thở sâu" class="text-yellow-600 hover:text-yellow-800 focus:outline-none" onclick="alert('Chỉnh sửa video Video hướng dẫn thở sâu')">
+                                        <i class="fas fa-edit">
+                                        </i>
+                                    </button>
+                                    <button aria-label="Xóa video Video hướng dẫn thở sâu" class="text-red-600 hover:text-red-800 focus:outline-none" onclick="confirmAction('Xóa video Video hướng dẫn thở sâu?')">
+                                        <i class="fas fa-trash-alt">
+                                        </i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Comment Moderation -->
+                <div class="bg-white rounded shadow p-6 space-y-4">
+                    <h3 class="text-lg font-semibold text-green-900">
+                        Duyệt bình luận
+                    </h3>
+                    <div class="overflow-y-auto max-h-64 divide-y divide-gray-200">
+                        <article aria-label="Bình luận của Nguyễn Văn A ngày 2023-05-10" class="py-3" tabindex="0">
+                            <p class="text-gray-800">
+                                Bình luận: "Bài viết rất hữu ích, cảm ơn Smoke Free!"
+                            </p>
+                            <div class="mt-2 flex gap-3">
+                                <button aria-label="Duyệt bình luận của Nguyễn Văn A" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded focus:outline-none" onclick="confirmAction('Duyệt bình luận của Nguyễn Văn A?')">
+                                    Duyệt
+                                </button>
+                                <button aria-label="Xóa bình luận của Nguyễn Văn A" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded focus:outline-none" onclick="confirmAction('Xóa bình luận của Nguyễn Văn A?')">
+                                    Xóa
+                                </button>
+                            </div>
+                        </article>
+                        <article aria-label="Bình luận của Trần Thị B ngày 2023-05-09" class="py-3" tabindex="0">
+                            <p class="text-gray-800">
+                                Bình luận: "Video rất dễ hiểu, giúp tôi giảm stress."
+                            </p>
+                            <div class="mt-2 flex gap-3">
+                                <button aria-label="Duyệt bình luận của Trần Thị B" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded focus:outline-none" onclick="confirmAction('Duyệt bình luận của Trần Thị B?')">
+                                    Duyệt
+                                </button>
+                                <button aria-label="Xóa bình luận của Trần Thị B" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded focus:outline-none" onclick="confirmAction('Xóa bình luận của Trần Thị B?')">
+                                    Xóa
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <!-- Motivational Messages -->
+                <div class="bg-white rounded shadow p-6 space-y-4">
+                    <h3 class="text-lg font-semibold text-green-900">
+                        Thư viện câu nói động viên
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-800">
+                        <li tabindex="0">
+                            Bạn đã tiết kiệm 100K!
+                        </li>
+                        <li tabindex="0">
+                            Mỗi ngày không thuốc là một ngày khỏe mạnh hơn.
+                        </li>
+                        <li tabindex="0">
+                            Bạn đang tiến gần hơn đến cuộc sống không khói thuốc.
+                        </li>
+                        <li tabindex="0">
+                            Hãy tự hào về mỗi bước tiến của bạn.
+                        </li>
+                        <li tabindex="0">
+                            Sức khỏe của bạn là tài sản quý giá nhất.
+                        </li>
+                    </ul>
+                    <button aria-label="Thêm câu nói động viên mới" class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" onclick="alert('Chức năng thêm câu nói động viên mới')">
+                        Thêm câu nói mới
+                    </button>
+                </div>
+            </section>
+            <!-- Membership Management Section -->
+            <section class="space-y-6" id="membership-management">
+                <h2 class="text-2xl font-bold text-green-900">
+                    Quản lý gói membership
+                </h2>
+                <div class="flex flex-col sm:flex-row sm:justify-between items-center gap-4 mb-4">
+                    <button aria-label="Thêm gói membership mới" class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" onclick="alert('Chức năng thêm gói membership mới')">
+                        Thêm gói mới
+                    </button>
+                </div>
+                <div class="overflow-x-auto bg-white rounded shadow">
+                    <table aria-label="Danh sách gói membership" class="min-w-full divide-y divide-gray-200" role="table">
+                        <thead class="bg-green-900 text-white">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                Tên gói
+                            </th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                Giá (VNĐ)
+                            </th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold" scope="col" tabindex="0">
+                                Mô tả
+                            </th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold" scope="col" tabindex="0">
+                                Hành động
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                        <tr class="hover:bg-green-50" tabindex="0">
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Basic
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                100,000
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Gói cơ bản, phù hợp người mới bắt đầu
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                <button aria-label="Chỉnh sửa gói Basic" class="text-yellow-600 hover:text-yellow-800 focus:outline-none" onclick="alert('Chỉnh sửa gói Basic')">
+                                    <i class="fas fa-edit">
+                                    </i>
+                                </button>
+                                <button aria-label="Xóa gói Basic" class="text-red-600 hover:text-red-800 focus:outline-none" onclick="confirmAction('Xóa gói Basic?')">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50" tabindex="0">
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Standard
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                300,000
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Gói tiêu chuẩn, nhiều tính năng hơn
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                <button aria-label="Chỉnh sửa gói Standard" class="text-yellow-600 hover:text-yellow-800 focus:outline-none" onclick="alert('Chỉnh sửa gói Standard')">
+                                    <i class="fas fa-edit">
+                                    </i>
+                                </button>
+                                <button aria-label="Xóa gói Standard" class="text-red-600 hover:text-red-800 focus:outline-none" onclick="confirmAction('Xóa gói Standard?')">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50" tabindex="0">
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Premium
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                600,000
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                Gói cao cấp, đầy đủ tính năng và hỗ trợ
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
+                                <button aria-label="Chỉnh sửa gói Premium" class="text-yellow-600 hover:text-yellow-800 focus:outline-none" onclick="alert('Chỉnh sửa gói Premium')">
+                                    <i class="fas fa-edit">
+                                    </i>
+                                </button>
+                                <button aria-label="Xóa gói Premium" class="text-red-600 hover:text-red-800 focus:outline-none" onclick="confirmAction('Xóa gói Premium?')">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- Reports & Analytics Section -->
+            <section class="space-y-6" id="reports-analytics">
+                <h2 class="text-2xl font-bold text-green-900">
+                    Báo cáo &amp; Analytics
+                </h2>
+                <div class="flex flex-col sm:flex-row sm:justify-between items-center gap-4 mb-4">
+                    <button aria-label="Xuất báo cáo PDF" class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" onclick="alert('Xuất báo cáo PDF')">
+                        Xuất báo cáo PDF
+                    </button>
+                    <button aria-label="Xuất báo cáo Excel" class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" onclick="alert('Xuất báo cáo Excel')">
+                        Xuất báo cáo Excel
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div aria-label="Báo cáo top người dùng bỏ thuốc thành công" class="bg-white rounded shadow p-5" tabindex="0">
+                        <h3 class="text-lg font-semibold text-green-900 mb-3">
+                            Top người dùng bỏ thuốc thành công
+                        </h3>
+                        <img alt="Biểu đồ hoặc bảng top người dùng bỏ thuốc thành công, màu xanh lá đậm trên nền trắng" class="w-full h-auto rounded" height="250" src="https://storage.googleapis.com/a1aa/image/41ad0905-7ef4-49d4-feaa-4cf70e3464a7.jpg" width="400"/>
+                    </div>
+                    <div aria-label="Báo cáo doanh thu theo tháng" class="bg-white rounded shadow p-5" tabindex="0">
+                        <h3 class="text-lg font-semibold text-green-900 mb-3">
+                            Doanh thu theo tháng
+                        </h3>
+                        <img alt="Biểu đồ doanh thu theo tháng, màu xanh lá đậm trên nền trắng" class="w-full h-auto rounded" height="250" src="https://storage.googleapis.com/a1aa/image/0df23b6a-3bba-4aa4-985e-9e953ab84ded.jpg" width="400"/>
+                    </div>
+                </div>
+                <div aria-label="Phân tích heatmap thời gian người dùng thèm thuốc" class="bg-white rounded shadow p-5 mt-6" tabindex="0">
+                    <h3 class="text-lg font-semibold text-green-900 mb-3">
+                        Heatmap thời gian người dùng thèm thuốc
+                    </h3>
+                    <img alt="Heatmap thể hiện thời gian người dùng thèm thuốc, màu sắc từ xanh nhạt đến cam đậm trên nền trắng" class="w-full h-auto rounded" height="300" src="https://storage.googleapis.com/a1aa/image/efe78235-1ebf-406d-9aab-f3c2194d2d71.jpg" width="800"/>
+                </div>
+            </section>
+            <!-- System Settings Section -->
+            <section class="space-y-6" id="system-settings">
+                <h2 class="text-2xl font-bold text-green-900">
+                    Cài đặt hệ thống
+                </h2>
+                <!-- Payment Configuration -->
+                <div class="bg-white rounded shadow p-6 space-y-4">
+                    <h3 class="text-lg font-semibold text-green-900">
+                        Cấu hình thanh toán
+                    </h3>
+                    <form aria-label="Form cấu hình thanh toán" class="space-y-4" id="paymentConfigForm" onsubmit="event.preventDefault()">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                            <label class="w-full sm:w-40 font-semibold text-gray-700" for="paypalApiKey">
+                                API Key PayPal:
+                            </label>
+                            <input class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" id="paypalApiKey" name="paypalApiKey" placeholder="Nhập API Key PayPal" type="text"/>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                            <label class="w-full sm:w-40 font-semibold text-gray-700" for="vnpayApiKey">
+                                API Key VNPay:
+                            </label>
+                            <input class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" id="vnpayApiKey" name="vnpayApiKey" placeholder="Nhập API Key VNPay" type="text"/>
+                        </div>
+                        <button class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" type="submit">
+                            Lưu cấu hình
+                        </button>
+                    </form>
+                </div>
+                <!-- Membership Price Adjustment -->
+                <div class="bg-white rounded shadow p-6 space-y-4">
+                    <h3 class="text-lg font-semibold text-green-900">
+                        Chỉnh giá gói membership
+                    </h3>
+                    <form aria-label="Form chỉnh giá gói membership" class="space-y-4" id="membershipPriceForm" onsubmit="event.preventDefault()">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block font-semibold text-gray-700 mb-1" for="priceBasic">
+                                    Basic (VNĐ)
+                                </label>
+                                <input class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" id="priceBasic" min="0" name="priceBasic" type="number" value="100000"/>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-gray-700 mb-1" for="priceStandard">
+                                    Standard (VNĐ)
+                                </label>
+                                <input class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" id="priceStandard" min="0" name="priceStandard" type="number" value="300000"/>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-gray-700 mb-1" for="pricePremium">
+                                    Premium (VNĐ)
+                                </label>
+                                <input class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" id="pricePremium" min="0" name="pricePremium" type="number" value="600000"/>
+                            </div>
+                        </div>
+                        <button class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" type="submit">
+                            Lưu giá
+                        </button>
+                    </form>
+                </div>
+                <!-- Automatic Notification Templates -->
+                <div class="bg-white rounded shadow p-6 space-y-4">
+                    <h3 class="text-lg font-semibold text-green-900">
+                        Thông báo tự động
+                    </h3>
+                    <form aria-label="Form cài đặt template email và SMS" class="space-y-4" id="notificationTemplateForm" onsubmit="event.preventDefault()">
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1" for="emailTemplate">
+                                Template Email (Nhắc nhở hàng ngày)
+                            </label>
+                            <textarea class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 resize-y" id="emailTemplate" name="emailTemplate" placeholder="Nhập nội dung email nhắc nhở hàng ngày" rows="4">Chào bạn, hãy tiếp tục cố gắng cai thuốc hôm nay!</textarea>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1" for="smsTemplate">
+                                Template SMS (Nhắc nhở hàng ngày)
+                            </label>
+                            <textarea class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 resize-y" id="smsTemplate" name="smsTemplate" placeholder="Nhập nội dung SMS nhắc nhở hàng ngày" rows="2">Bạn đã làm tốt, đừng bỏ cuộc!</textarea>
+                        </div>
+                        <button class="bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" type="submit">
+                            Lưu template
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+<!-- User Details Modal -->
+<div aria-labelledby="userDetailsTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50" id="userDetailsModal" role="dialog">
+    <div class="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+        <button aria-label="Đóng chi tiết người dùng" class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 focus:outline-none" onclick="closeUserDetails()">
+            <i class="fas fa-times fa-lg">
+            </i>
+        </button>
+        <h3 class="text-xl font-bold text-green-900 mb-4" id="userDetailsTitle">
+            Chi tiết người dùng
+        </h3>
+        <div class="space-y-4 text-gray-800" id="userDetailsContent">
+            <!-- Dynamic content inserted by JS -->
+        </div>
+        <div class="mt-6 flex justify-end gap-4">
+            <button class="bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" onclick="confirmAction('Khóa tài khoản này?')">
+                Khóa tài khoản
+            </button>
+            <button class="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-5 py-2 rounded transition focus:outline-none" onclick="resetPassword()">
+                Reset mật khẩu
+            </button>
+            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-5 py-2 rounded transition focus:outline-none" onclick="closeUserDetails()">
+                Đóng
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    // Confirm dialog with fade out effect on success
+    function confirmAction(message) {
+        if (confirm(message)) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = '0%';
+            progressBar.classList.remove('hidden');
+            progressBar.style.width = '100%';
+            setTimeout(() => {
+                progressBar.style.width = '0%';
+                alert('Thao tác thành công!');
+            }, 800);
+        }
+    }
+
+    // Show user details modal with dummy data
+    function showUserDetails(userName) {
+        const modal = document.getElementById('userDetailsModal');
+        const content = document.getElementById('userDetailsContent');
+        // Dummy data for demo
+        const userData = {
+            'Nguyễn Văn A': {
+                email: 'vana@example.com',
+                membership: 'Premium',
+                status: 'Active',
+                registrationDate: '2023-01-15',
+                activityHistory: [
+                    'Chat với coach ngày 2023-05-01',
+                    'Log cai nghiện ngày 2023-05-10',
+                ],
+            },
+            'Trần Thị B': {
+                email: 'thib@example.com',
+                membership: 'Standard',
+                status: 'Active',
+                registrationDate: '2023-02-20',
+                activityHistory: [
+                    'Chat với coach ngày 2023-04-15',
+                    'Log cai nghiện ngày 2023-05-05',
+                ],
+            },
+            'Lê Văn C': {
+                email: 'levanc@example.com',
+                membership: 'Basic',
+                status: 'Banned',
+                registrationDate: '2023-03-05',
+                activityHistory: [
+                    'Chat với coach ngày 2023-03-20',
+                    'Log cai nghiện ngày 2023-04-01',
+                ],
+            },
+            'Phạm Thị D': {
+                email: 'pthid@example.com',
+                membership: 'Premium',
+                status: 'Active',
+                registrationDate: '2023-04-10',
+                activityHistory: [
+                    'Chat với coach ngày 2023-04-25',
+                    'Log cai nghiện ngày 2023-05-08',
+                ],
+            },
+            'Hoàng Văn E': {
+                email: 'hoangve@example.com',
+                membership: 'Standard',
+                status: 'Active',
+                registrationDate: '2023-05-12',
+                activityHistory: [
+                    'Chat với coach ngày 2023-05-15',
+                    'Log cai nghiện ngày 2023-05-20',
+                ],
+            },
+        };
+
+        const user = userData[userName];
+        if (!user) {
+            content.innerHTML = `<p>Không tìm thấy thông tin người dùng.</p>`;
+        } else {
+            content.innerHTML = `
+          <p><strong>Tên:</strong> ${userName}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Gói membership:</strong> ${user.membership}</p>
+          <p><strong>Trạng thái:</strong> ${user.status}</p>
+          <p><strong>Ngày đăng ký:</strong> ${user.registrationDate}</p>
+          <div>
+            <strong>Lịch sử hoạt động:</strong>
+            <ul class="list-disc list-inside mt-1">
+              ${user.activityHistory
+                .map((item) => `<li tabindex="0">${item}</li>`)
+                .join('')}
+            </ul>
+          </div>
+        `;
+        }
+        modal.classList.remove('hidden');
+        modal.focus();
+    }
+
+    function closeUserDetails() {
+        const modal = document.getElementById('userDetailsModal');
+        modal.classList.add('hidden');
+    }
+
+    function resetPassword() {
+        if (confirm('Bạn có chắc muốn reset mật khẩu người dùng này?')) {
+            alert('Mật khẩu đã được reset thành công!');
+        }
+    }
+
+    // Close profile dropdown if clicked outside
+    document.addEventListener('click', (e) => {
+        const profileBtn = document.getElementById('profileBtn');
+        const dropdown = document.getElementById('profileDropdown');
+        if (
+            dropdown &&
+            !dropdown.classList.contains('hidden') &&
+            !profileBtn.contains(e.target) &&
+            !dropdown.contains(e.target)
+        ) {
+            dropdown.classList.add('hidden');
+        }
+    });
+
+    // Notification button blinking effect on alert
+    const notificationBtn = document.getElementById('notificationBtn');
+    const header = document.getElementById('header');
+    let alertBlinkInterval = null;
+
+    function startAlertBlink() {
+        if (alertBlinkInterval) return;
+        alertBlinkInterval = setInterval(() => {
+            header.classList.toggle('bg-orange-200');
+        }, 600);
+    }
+
+    function stopAlertBlink() {
+        clearInterval(alertBlinkInterval);
+        alertBlinkInterval = null;
+        header.classList.remove('bg-orange-200');
+    }
+
+    // Simulate alert blinking for demo
+    startAlertBlink();
+
+    notificationBtn.addEventListener('click', () => {
+        alert('Hiển thị thông báo: Có 3 báo cáo người dùng và lỗi hệ thống.');
+        stopAlertBlink();
+        const badge = document.getElementById('notificationBadge');
+        badge.style.display = 'none';
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>
+        Đăng Ký Gói Thành Viên
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+<main class="flex-grow container mx-auto px-4 py-10">
+    <h1 class="text-3xl font-semibold text-center mb-10 text-gray-800">
+        Đăng Ký Gói Thành Viên
+    </h1>
+    <div class="grid gap-8 max-w-6xl mx-auto sm:grid-cols-1 md:grid-cols-3">
+        <!-- Free Plan Card -->
+        <section aria-label="Gói Free" class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+            <div class="flex justify-center mb-4">
+                <img alt="Icon biểu tượng gói Free màu xanh lá cây với hình chiếc lá tượng trưng cho sự tự nhiên và miễn phí" class="w-16 h-16" height="64" loading="lazy" src="https://storage.googleapis.com/a1aa/image/e76a7b84-16ee-4287-225d-0949b42df834.jpg" width="64"/>
+            </div>
+            <h2 class="text-xl font-semibold text-center mb-2 text-gray-900">
+                Free
+            </h2>
+            <p class="text-center text-gray-500 mb-6">
+                Gói miễn phí cơ bản
+            </p>
+            <table class="w-full text-left mb-6 border border-gray-200 rounded">
+                <tbody>
+                <tr class="border-b border-gray-200">
+                    <td class="py-2 px-3">
+                        Truy cập bài viết cơ bản
+                    </td>
+                    <td class="py-2 px-3 text-center text-green-600 text-xl">
+                        ✓
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-200 bg-gray-50">
+                    <td class="py-2 px-3">
+                        Xem video hướng dẫn
+                    </td>
+                    <td class="py-2 px-3 text-center text-red-500 text-xl">
+                        ✗
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                    <td class="py-2 px-3">
+                        Hỗ trợ tư vấn qua chat
+                    </td>
+                    <td class="py-2 px-3 text-center text-red-500 text-xl">
+                        ✗
+                    </td>
+                </tr>
+                <tr>
+                    <td class="py-2 px-3">
+                        Video call tư vấn
+                    </td>
+                    <td class="py-2 px-3 text-center text-red-500 text-xl">
+                        ✗
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="mb-6 text-center text-gray-900 font-bold text-lg">
+                Miễn phí
+            </div>
+            <button aria-disabled="true" class="bg-gray-300 text-gray-600 cursor-not-allowed py-3 rounded-md font-semibold" disabled="">
+                Thanh toán ngay
+            </button>
+        </section>
+        <!-- Premium Plan Card -->
+        <section aria-label="Gói Premium" class="bg-white rounded-lg shadow-md p-6 flex flex-col border-2 border-indigo-600">
+            <div class="flex justify-center mb-4">
+                <img alt="Icon biểu tượng gói Premium màu tím với hình ngôi sao tượng trưng cho đặc quyền nâng cao" class="w-16 h-16" height="64" loading="lazy" src="https://storage.googleapis.com/a1aa/image/413b7507-d94c-4fe2-da20-77483c72d243.jpg" width="64"/>
+            </div>
+            <h2 class="text-xl font-semibold text-center mb-2 text-gray-900">
+                Premium
+            </h2>
+            <p class="text-center text-gray-500 mb-6">
+                Gói nâng cao nhiều tính năng
+            </p>
+            <table class="w-full text-left mb-6 border border-gray-200 rounded">
+                <tbody>
+                <tr class="border-b border-gray-200">
+                    <td class="py-2 px-3">
+                        Truy cập bài viết cơ bản
+                    </td>
+                    <td class="py-2 px-3 text-center text-green-600 text-xl">
+                        ✓
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-200 bg-gray-50">
+                    <td class="py-2 px-3">
+                        Xem video hướng dẫn
+                    </td>
+                    <td class="py-2 px-3 text-center text-green-600 text-xl">
+                        ✓
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                    <td class="py-2 px-3">
+                        Hỗ trợ tư vấn qua chat
+                    </td>
+                    <td class="py-2 px-3 text-center text-green-600 text-xl">
+                        ✓
+                    </td>
+                </tr>
+                <tr>
+                    <td class="py-2 px-3">
+                        Video call tư vấn
+                    </td>
+                    <td class="py-2 px-3 text-center text-red-500 text-xl">
+                        ✗
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="mb-6 text-center text-gray-900 font-bold text-lg">
+                150.000₫ / tháng
+                <br/>
+                <span class="text-sm text-gray-500">
+       1.500.000₫ / năm
+      </span>
+            </div>
+            <div id="premium-actions" class="flex flex-col gap-3">
+                <button aria-label="Thanh toán gói Premium ngay" class="bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-md font-semibold transition" onclick="goToPaymentPage('premium')">
+                    Thanh toán ngay
+                </button>
+            </div>
+        </section>
+        <!-- VIP Plan Card -->
+        <section aria-label="Gói VIP" class="bg-white rounded-lg shadow-md p-6 flex flex-col border-2 border-yellow-500">
+            <div class="flex justify-center mb-4 relative">
+                <img alt="Icon biểu tượng gói VIP màu vàng với hình video call tượng trưng cho đặc quyền gọi video trực tiếp" class="w-16 h-16" height="64" loading="lazy" src="https://storage.googleapis.com/a1aa/image/1196faa2-ea2e-400d-0046-c780a735da57.jpg" width="64"/>
+                <i aria-hidden="true" class="fas fa-video absolute -top-2 -right-2 text-yellow-500 text-2xl">
+                </i>
+            </div>
+            <h2 class="text-xl font-semibold text-center mb-2 text-gray-900">
+                VIP
+            </h2>
+            <p class="text-center text-gray-500 mb-6">
+                Gói cao cấp với đầy đủ đặc quyền
+            </p>
+            <table class="w-full text-left mb-6 border border-gray-200 rounded">
+                <tbody>
+                <tr class="border-b border-gray-200">
+                    <td class="py-2 px-3">
+                        Truy cập bài viết cơ bản
+                    </td>
+                    <td class="py-2 px-3 text-center text-green-600 text-xl">
+                        ✓
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-200 bg-gray-50">
+                    <td class="py-2 px-3">
+                        Xem video hướng dẫn
+                    </td>
+                    <td class="py-2 px-3 text-center text-green-600 text-xl">
+                        ✓
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                    <td class="py-2 px-3">
+                        Hỗ trợ tư vấn qua chat
+                    </td>
+                    <td class="py-2 px-3 text-center text-green-600 text-xl">
+                        ✓
+                    </td>
+                </tr>
+                <tr>
+                    <td class="py-2 px-3">
+                        Video call tư vấn
+                    </td>
+                    <td class="py-2 px-3 text-center text-green-600 text-xl">
+                        ✓
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="mb-6 text-center text-gray-900 font-bold text-lg">
+                300.000₫ / tháng
+                <br/>
+                <span class="text-sm text-gray-500">
+       3.000.000₫ / năm
+      </span>
+            </div>
+            <div id="vip-actions" class="flex flex-col gap-3">
+                <button aria-label="Thanh toán gói VIP ngay" class="bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-md font-semibold transition" onclick="goToPaymentPage('vip')">
+                    Thanh toán ngay
+                </button>
+            </div>
+        </section>
+    </div>
+</main>
+<footer class="bg-white p-4 text-center text-gray-500 text-sm">
+    © 2024 Smoke Free - Trang đăng ký gói thành viên
+</footer>
+
+<script>
+    // Chuyển sang trang thanh toán riêng, truyền plan qua query param
+    function goToPaymentPage(plan) {
+        window.location.href = `thanhtoan.html?plan=${plan} `;
+    }
+</script>
+</body>
+</html>
