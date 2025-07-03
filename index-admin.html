@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmokeFree</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
+</head>
+
+<body>
+  <div id="container">
+    <!-- Sidebar -->
+    <aside id="sidebar"> 
+      <div id="sidebar-header">
+        <img id="sidebar-logo" src="images/logo.png" alt="SmokeFree">
+      </div>      
+      <nav id="sidebar-nav">
+        <ul>
+          <li id="nav-dashboard" class="active"><a href="#"><i class="ti-dashboard"></i>Tổng quan</a></li>
+          <li id="nav-users"><a href="#"><i class="ti-user"></i> Người dùng</a></li>
+          <li id="nav-coaches"><a href="#"><i class="ti-star"></i> Huấn luyện viên</a></li>
+          <li id="nav-news"><a href="#"><i class="ti-announcement"></i> Tin tức</a></li>
+          <li id="nav-blog"><a href="#"><i class="ti-book"></i> Blog</a></li>
+          <li id="nav-plans"><a href="#"><i class="ti-wallet"></i> Gói thành viên</a></li>
+          <li id="nav-analytics"><a href="#"><i class="ti-stats-up"></i> Thống kê</a></li>
+        </ul>
+      </nav>
+      
+      <div id="sidebar-footer">
+        <a href="#" id="logout-btn"><i class="ti-power-off"></i> Đăng xuất</a>
+      </div>
+    </aside>
+
+    <!-- Header -->
+    <main id="main-zone">
+      <header id="main-header">
+        <div id="header-left">
+          <h1>Tổng Quan Hệ Thống</h1>
+        </div>
+        <div id="header-right">
+          <div id="profile">
+            <img id="profile-img" src="images/avatar.png" alt="Admin">
+            <span id="profile-name">Admin ...</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div id="main-content">
+        <!-- Thống kê chung -->
+        <div id="stats-row"> 
+          <div id="stat-active-users" class="stat-card">
+            <div class="stat-icon bg-blue">
+              <i class="ti-user"></i>
+            </div>
+            <div class="stat-info">
+              <h3>2,458</h3>
+              <p>Người dùng hoạt động</p>
+            </div>
+          </div>
+                   
+          <div id="stat-success-stories" class="stat-card">
+            <div class="stat-icon bg-pink">
+              <i class="ti-heart"></i>
+            </div>
+            <div class="stat-info">
+              <h3>1,027</h3>
+              <p>Thành công trong tháng</p>
+            </div>
+          </div>          
+          
+          <div id="stat-revenue" class="stat-card">
+            <div class="stat-icon bg-orange">
+              <i class="ti-wallet"></i>
+            </div>
+            <div class="stat-info">
+              <h3>85,420,000đ</h3>
+              <p>Doanh thu tháng</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hoạt động gần đây -->
+        <div id="recent-activity-col">
+          <div id="recent-activity-card" class="content-card">
+            <div class="card-header">
+              <h3>Hoạt động gần đây</h3>
+            </div>
+            <div class="card-body">
+              <table id="activity-table" class="table">
+                <thead>
+                  <tr>
+                    <th>Thời gian</th>
+                    <th>Loại hoạt động</th>
+                    <th>Nội dung</th>
+                    <th>Quản trị viên</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>14:30 - 20/03/2025</td>
+                    <td><span class="activity-badge create">Tạo mới</span></td>                    
+                    <td>Thêm gói thành viên Premium+</td>
+                    <td>admin:nam</td>
+                    <td><span class="status-badge paid">Hoàn thành</span></td>
+                  </tr>
+                  <tr>
+                    <td>14:15 - 20/03/2025</td>
+                    <td><span class="activity-badge update">Cập nhật</span></td>                    
+                    <td>Cập nhật nội dung bài viết "5 cách vượt qua cơn thèm thuốc"</td>
+                    <td>admin:linh</td>
+                    <td><span class="status-badge paid">Hoàn thành</span></td>
+                  </tr>
+                  <tr>
+                    <td>11:15 - 19/03/2025</td>
+                    <td><span class="activity-badge delete">Xóa</span></td>
+                    <td>Xóa tài khoản vi phạm #user_4587</td>
+                    <td>admin:nam</td>
+                    <td><span class="status-badge paid">Hoàn thành</span></td>
+                  </tr>
+                  <tr>
+                    <td>09:45 - 17/03/2025</td>
+                    <td><span class="activity-badge warning">Cảnh báo</span></td>
+                    <td>Gửi cảnh báo đến coach:tuan</td>
+                    <td>admin:linh</td>
+                    <td><span class="status-badge paid">Hoàn thành</span></td>
+                  </tr>
+                  <tr>
+                    <td>17:26 - 16/03/2025</td>
+                    <td><span class="activity-badge create">Tạo mới</span></td>                    
+                    <td>Thêm bài viết mới "Lợi ích sức khỏe sau 30 ngày bỏ thuốc"</td>
+                    <td>admin:linh</td>
+                    <td><span class="status-badge paid">Hoàn thành</span></td>
+                  </tr>                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="plugins/jQuery/jquery.min.js"></script>
+  <script src="js/script.js"></script>
+
+</body>
+</html>

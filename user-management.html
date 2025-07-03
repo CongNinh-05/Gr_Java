@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoryBox</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
+</head>
+
+<body>
+  <div id="container">
+    <!-- Sidebar -->
+    <aside id="sidebar"> 
+      <div id="sidebar-header">
+        <img id="sidebar-logo" src="images/logo.png" alt="StoryBox">
+      </div>      
+      <nav id="sidebar-nav">
+        <ul>
+          <li id="nav-dashboard"><a href="#"><i class="ti-dashboard"></i>Tổng quan</a></li>
+          <li id="nav-users" class="active"><a href="#"><i class="ti-user"></i> Người dùng</a></li>
+          <li id="nav-coaches"><a href="#"><i class="ti-star"></i> Huấn luyện viên</a></li>
+          <li id="nav-news"><a href="#"><i class="ti-announcement"></i> Tin tức</a></li>
+          <li id="nav-blog"><a href="#"><i class="ti-book"></i> Blog</a></li>
+          <li id="nav-plans"><a href="#"><i class="ti-wallet"></i> Gói thành viên</a></li>
+          <li id="nav-analytics"><a href="#"><i class="ti-stats-up"></i> Thống kê</a></li>
+        </ul>
+      </nav>
+      
+      <div id="sidebar-footer">
+        <a href="#" id="logout-btn"><i class="ti-power-off"></i> Đăng xuất</a>
+      </div>
+    </aside>
+
+    <!-- Header -->
+    <main id="admin-main">
+        <header id="admin-header">
+            <div id="header-left">
+            <h1>Quản Lý Người Dùng</h1>
+            </div>
+            <div id="header-right">          
+            <div id="profile">
+                <img id="profile-img" src="images/avatar.png" alt="Admin">
+                <span id="profile-name">Admin ...</span>
+            </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div id="main-content">
+            <!-- Tìm kiếm và bộ lọc -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Bộ lọc</h3>
+                </div>
+                <div class="card-body">
+                    <div id="filter-row">
+                        <form id="search-bar" action="search.html">
+                            <div id="search-container">
+                                <input type="search" name="s" placeholder="Tìm kiếm...">
+                                <button type="submit"><i class="ti-search"></i></button>
+                            </div>
+                          </form>
+                        <div id="filter-options">
+                            <select class="filter-select">
+                                <option value="all">Tất cả người dùng</option>
+                                <option value="active">Đang hoạt động</option>
+                                <option value="locked">Bị khóa</option>
+                            </select>
+                            <select class="filter-select">
+                                <option value="all">Tất cả tình trạng</option>
+                                <option value="pending">Đang tiến hành</option>
+                                <option value="paid">Thành công</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Danh sách người dùng -->
+            <div class="content-card">
+            <div class="card-header">
+                <h3>Danh sách người dùng</h3>
+                <div class="pagination-info">
+                Hiển thị 1-12 của 1,248 người dùng
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="user-grid">
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="images/avatar.png" alt="User Avatar">
+                            <span class="user-status active"></span>
+                        </div>
+                        <div class="user-info">
+                            <h4>Nguyễn Văn A</h4>
+                            <p class="user-email">nguyenvana@example.com</p>
+                            <div class="user-meta">
+                                <span>Tình trạng: Thành công</span>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn btn-delete"><i class="ti-trash"></i> Xóa</button>
+                            <button class="btn btn-lock"><i class="ti-lock"></i> Khóa</button>
+                        </div>
+                    </div>
+
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="images/avatar.png" alt="User Avatar">
+                            <span class="user-status active"></span>
+                        </div>
+                        <div class="user-info">
+                            <h4>Trần Thị B</h4>
+                            <p class="user-email">tranthib@example.com</p>
+                            <div class="user-meta">
+                                <span>Tình trạng: Thành công</span>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn btn-delete"><i class="ti-trash"></i> Xóa</button>
+                            <button class="btn btn-lock"><i class="ti-lock"></i> Khóa</button>
+                        </div>
+                    </div>
+
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="images/avatar.png" alt="User Avatar">
+                            <span class="user-status locked"></span>
+                        </div>
+                        <div class="user-info">
+                            <h4>Lê Văn C</h4>
+                            <p class="user-email">levanc@example.com</p>
+                            <div class="user-meta">
+                                <span>Tình trạng: Đang tiến hành (15/30 ngày)</span>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn btn-delete"><i class="ti-trash"></i> Xóa</button>
+                            <button class="btn btn-unlock"><i class="ti-unlock"></i> Mở khóa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+  </div>
+
+  <script src="plugins/jQuery/jquery.min.js"></script>
+  <script src="js/script.js"></script>
+
+</body>
+</html>
