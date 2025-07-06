@@ -14,20 +14,17 @@ import java.util.List;
 public interface ProgressRepository extends JpaRepository<Progress, Long> {
     List<Progress> findByUser(User user);
 
-    List<Progress> findByUserAndDate(User user, LocalDate date);
+    List<Progress> findByUserAndRecordDate(User user, LocalDate recordDate);
 
     @Query("""
-            SELECT new co.smokefree.dto.leaderboard.LeaderboardEntry(
-                u.name as userName,
-                COUNT(p.date) as smokeFreeDays,
-                SUM(p.moneySaved) as moneySaved
-            )
-            FROM Progress p
-            JOIN p.user u
-            WHERE p.cigarettesSmoked = 0
-            GROUP BY u.id, u.name
-            ORDER BY smokeFreeDays DESC, moneySaved DESC
-            LIMIT 10
+                SELECT new co.smokefree.dto.leaderboard.LeaderboardEntry(
+                    u.userName, COUNT(p.recordDate), SUM(p.moneySaved)
+                )
+                FROM Progress p
+                JOIN p.user u
+                WHERE p.cigarettesSmoked = 0
+                GROUP BY u.id, u.userName
+                ORDER BY COUNT(p.recordDate) DESC, SUM(p.moneySaved) DESC
             """)
     List<LeaderboardEntry> calculateLeaderboard();
 }

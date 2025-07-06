@@ -51,7 +51,7 @@ public class NotificationService {
             Notification notification = new Notification();
             notification.setUser(user);
             notification.setMessage(message);
-            notification.setSentAt(LocalDateTime.now());
+            notification.setCreatedAt(LocalDateTime.now());
             notification.setRead(false);
 
             notificationRepository.save(notification);
@@ -78,9 +78,9 @@ public class NotificationService {
 
     private NotificationResponse mapToNotificationResponse(Notification notification) {
         NotificationResponse response = new NotificationResponse();
-        response.setId(notification.getId());
+        response.setId(notification.getNotificationId());
         response.setMessage(notification.getMessage());
-        response.setSentAt(notification.getSentAt().toString());
+        response.setSentAt(notification.getCreatedAt().toString());
         response.setRead(notification.isRead());
         return response;
     }

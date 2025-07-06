@@ -12,8 +12,9 @@ import co.smokefree.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,7 @@ public class BadgeService {
     private final UserRepository userRepository;
     private final BadgeRepository badgeRepository;
 
+    @Transactional
     public BadgeResponse awardBadge(BadgeAwardRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new AppException("Không tìm thấy người dùng!", HttpStatus.NOT_FOUND));
@@ -38,7 +40,7 @@ public class BadgeService {
         UserBadge userBadge = new UserBadge();
         userBadge.setUser(user);
         userBadge.setBadge(badge);
-        userBadge.setEarnedAt(LocalDateTime.now());
+        userBadge.setAwardedDate(LocalDate.now());
 
         userBadgeRepository.save(userBadge);
         return mapToBadgeResponse(badge);
@@ -55,7 +57,7 @@ public class BadgeService {
 
     private BadgeResponse mapToBadgeResponse(Badge badge) {
         BadgeResponse response = new BadgeResponse();
-        response.setId(badge.getId());
+        response.setId(badge.getBadgeId());
         response.setName(badge.getName());
         response.setDescription(badge.getDescription());
         response.setImageUrl(badge.getImageUrl());

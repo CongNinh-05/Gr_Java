@@ -32,9 +32,9 @@ class FeedbackServiceImpl implements FeedbackService {
 
         Feedback feedback = Feedback.builder()
                 .user(user)
-                .content(request.getContent())
+                .comment(request.getContent())
                 .rating(request.getRating())
-                .submittedAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .build();
 
         feedbackRepository.save(feedback);

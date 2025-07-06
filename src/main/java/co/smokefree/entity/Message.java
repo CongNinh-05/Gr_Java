@@ -6,11 +6,16 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "messages")
+@Table(name = "chat_messages")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "message_id")
+    private Long messageId;
+
+    @ManyToOne
+    @JoinColumn(name = "session_id", nullable = false)
+    private ChatSession chatSession;
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
@@ -20,8 +25,8 @@ public class Message {
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
-    @Column(nullable = false, length = 1000)
-    private String content;
+    @Column(name = "message_text", nullable = false, length = 1000)
+    private String messageText;
 
     @Column(name = "sent_at", nullable = false)
     private LocalDateTime sentAt;

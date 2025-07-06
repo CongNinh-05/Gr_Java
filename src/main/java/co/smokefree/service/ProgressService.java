@@ -26,7 +26,7 @@ public class ProgressService {
 
         Progress progress = new Progress();
         progress.setUser(user);
-        progress.setDate(request.getDate());
+        progress.setRecordDate(request.getDate());
         progress.setCigarettesSmoked(request.getCigarettesSmoked());
         progress.setMoneySaved(request.getMoneySaved());
         progress.setHealthImprovementNotes(request.getHealthImprovementNotes());
@@ -46,8 +46,8 @@ public class ProgressService {
 
     private ProgressResponse mapToProgressResponse(Progress progress) {
         ProgressResponse response = new ProgressResponse();
-        response.setId(progress.getId());
-        response.setDate(progress.getDate());
+        response.setId(progress.getProgressId());
+        response.setDate(progress.getRecordDate());
         response.setCigarettesSmoked(progress.getCigarettesSmoked());
         response.setMoneySaved(progress.getMoneySaved());
         response.setHealthImprovementNotes(progress.getHealthImprovementNotes());

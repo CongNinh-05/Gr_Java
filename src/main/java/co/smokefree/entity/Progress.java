@@ -6,18 +6,19 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "progress")
+@Table(name = "health_progress")
 public class Progress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "progress_id")
+    private Long progressId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     private User user;
 
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
+    @Column(name = "record_date", nullable = false)
+    private LocalDate recordDate;
 
     @Column(name = "cigarettes_smoked")
     private Integer cigarettesSmoked;

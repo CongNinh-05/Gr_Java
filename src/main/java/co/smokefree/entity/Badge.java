@@ -2,6 +2,7 @@ package co.smokefree.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -9,7 +10,8 @@ import lombok.Data;
 public class Badge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "badge_id")
+    private Long badgeId;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -23,11 +25,9 @@ public class Badge {
     @Column(name = "image_url")
     private String imageUrl;
 
-    public Badge(Long id, String name, String description, String criteria, String imageUrl) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.criteria = criteria;
-        this.imageUrl = imageUrl;
-    }
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 }
